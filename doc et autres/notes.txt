@@ -1,0 +1,2 @@
+pastilles rouges "nouveautés"
+pastilles blanches "extensions(options?) disponibles" pour dire qu'il y a du stock supp.

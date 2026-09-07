@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  postgres-db:
+    image: postgres:15
+    container_name: lemark_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: lemark_admin
+      POSTGRES_PASSWORD: lemark_admin
+      POSTGRES_DB: lemark_catalogue
+    ports:
+      - "5432:5432"
+    volumes:
+      - lemark_data:/var/lib/postgresql/data
+      - ./initialisation:/docker-entrypoint-initdb.d
+
+volumes:
+  lemark_data:
