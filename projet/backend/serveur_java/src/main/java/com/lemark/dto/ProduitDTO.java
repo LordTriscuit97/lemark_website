@@ -11,6 +11,8 @@ public record ProduitDTO(
         String descriptionCourte,
         String descriptionLongue,
         boolean estNouveaute,
+        CategorieDTO categorie,
         List<ModeleDTO> modeles,
-        List<ImageProduitDTO> images
+        List<ImageProduitDTO> images,
+        List<OptionEquipementDTO> options
 ) {}
