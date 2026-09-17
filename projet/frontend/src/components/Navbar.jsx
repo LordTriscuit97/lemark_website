@@ -1,10 +1,25 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 function Navbar() {
     const [menuMobileOuvert, setMenuMobileOuvert] = useState(false);
     const [dropdownDesktopOuvert, setDropdownDesktopOuvert] = useState(false);
     const [sousMenuMobileOuvert, setSousMenuMobileOuvert] = useState(false);
+    const [estScrolle, setEstScrolle] = useState(false);
+
+    // Détection du défilement
+    useEffect(() => {
+        const gererDefilement = () => {
+            if (window.scrollY > 100) {
+                setEstScrolle(true);
+            } else {
+                setEstScrolle(false);
+            }
+        };
+
+        window.addEventListener('scroll', gererDefilement);
+        return () => window.removeEventListener('scroll', gererDefilement);
+    }, []);
 
     const fermerTout = () => {
         setMenuMobileOuvert(false);
@@ -13,7 +28,7 @@ function Navbar() {
     };
 
     return (
-        <header>
+        <header className={`sticky-navbar ${estScrolle ? 'header-scrolled' : ''}`}>
             {/* ================= VERSION ORDINATEUR ================= */}
             <div className="d-none d-lg-block header-wrapper-desktop">
                 <div className="top-info-bar">

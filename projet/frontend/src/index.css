@@ -1,12 +1,61 @@
 /* ===================================================
-   CONFIGURATION NAVBAR DESKTOP
+   VARIABLES GLOBALES ET STYLES DE BASE
    =================================================== */
+
+:root {
+    --lemark-charcoal: #18191B;
+    --lemark-bg-offwhite: #F4F5F7;
+    --lemark-white: #FFFFFF;
+    --lemark-red: #D91D1D;
+    --lemark-red-dark: #BF1414;
+    --lemark-yellow: #FFB703;
+}
+
+body {
+    background-color: var(--lemark-bg-offwhite);
+    color: #27292E;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+/* Bouton Jaune Industriel */
+.btn-yellow-pill {
+    background-color: var(--lemark-yellow);
+    color: #18191B;
+    font-weight: 800;
+    padding: 1rem 2.5rem;
+    border: none;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 1.1rem;
+    display: inline-block;
+}
+
+.btn-yellow-pill:hover,
+.btn-yellow-pill:focus {
+    background-color: #E6A500;
+    color: #18191B;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* ===================================================
+   NAVBAR STICKY & DÉFILEMENT
+   =================================================== */
+
+header.sticky-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+}
 
 .header-wrapper-desktop {
     position: relative;
     width: 100%;
     height: 90px;
-    /* Dégradé charcoal adouci et feutré */
     background: linear-gradient(180deg, #18191B 0%, #27292E 100%);
     margin-bottom: 5.5rem;
 }
@@ -20,12 +69,12 @@
     font-size: 0.85rem;
 }
 
-/* Boîte rouge : dégradé subtil et naturel */
+/* Boîte rouge */
 .navbar-red-pill-desktop {
     position: absolute;
     top: 44px;
     right: 0;
-    left: 275px; /* Dégage l'espace exact pour le logo */
+    left: 275px;
     height: 60px;
     background: linear-gradient(90deg, #D91D1D 0%, #BF1414 100%);
     border-radius: 20px 0 0 20px;
@@ -35,27 +84,38 @@
     justify-content: space-between;
     padding: 0 1.5rem 0 2rem;
     z-index: 10;
-    overflow: visible; /* Permet au menu déroulant de sortir de la barre */
+    overflow: visible;
 }
 
-/* Logo : centré horizontalement entre 0 et 275px, et verticalement à 74px */
+/* Logo desktop & recentrage scroll */
 .navbar-logo-desktop {
     position: absolute;
     left: 0;
-    width: 275px; /* Même valeur que le 'left' de .navbar-red-pill-desktop */
+    width: 275px;
     top: 74px;
     transform: translateY(-50%);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 25;
+    transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .navbar-logo-desktop img {
-    height: 140px; /* Ajuste cette hauteur comme tu veux, le centrage restera parfait */
+    height: 140px;
     width: auto;
     display: block;
     filter: drop-shadow(0 5px 12px rgba(0, 0, 0, 0.28));
+    transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s ease;
+}
+
+.header-scrolled .navbar-logo-desktop {
+    top: 45px !important;
+}
+
+.header-scrolled .navbar-logo-desktop img {
+    height: 68px !important;
+    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.35));
 }
 
 .nav-pill-link {
@@ -72,7 +132,7 @@
 
 .nav-pill-link:hover {
     background-color: rgba(0, 0, 0, 0.18);
-    color: #FFB703;
+    color: var(--lemark-yellow);
     transform: translateY(-1px);
 }
 
@@ -82,7 +142,7 @@
     background-color: rgba(255, 255, 255, 0.25);
 }
 
-/* Menu déroulant Desktop "Nos Produits" */
+/* Dropdown */
 .nav-dropdown {
     position: relative;
     display: inline-block;
@@ -121,7 +181,7 @@
 
 .dropdown-item-custom:hover {
     background-color: #F4F5F7;
-    color: #D91D1D;
+    color: var(--lemark-red);
 }
 
 .dropdown-divider-custom {
@@ -131,12 +191,12 @@
 }
 
 /* ===================================================
-   CONFIGURATION NAVBAR MOBILE & ANIMATION DÉROULANTE
+   NAVBAR MOBILE
    =================================================== */
 
 .header-wrapper-mobile {
     background: linear-gradient(180deg, #18191B 0%, #27292E 100%);
-    border-bottom: 3px solid #D91D1D;
+    border-bottom: 3px solid var(--lemark-red);
     margin-bottom: 2rem;
 }
 
@@ -159,8 +219,9 @@
     transition: border-color 0.2s ease;
 }
 
-.btn-hamburger:focus, .btn-hamburger:hover {
-    border-color: #FFB703;
+.btn-hamburger:focus,
+.btn-hamburger:hover {
+    border-color: var(--lemark-yellow);
 }
 
 .hamburger-line {
@@ -170,7 +231,6 @@
     border-radius: 2px;
 }
 
-/* Tiroir mobile */
 .mobile-menu-drawer {
     max-height: 0;
     opacity: 0;
@@ -181,9 +241,10 @@
 }
 
 .mobile-menu-drawer.open {
-    max-height: 850px; /* Assez d'espace pour le sous-menu déployé */
+    max-height: 850px;
     opacity: 1;
     border-top: 1px solid rgba(255, 255, 255, 0.15);
+    overflow-y: auto;
 }
 
 .mobile-nav-link {
@@ -201,13 +262,12 @@
 .mobile-nav-link:hover,
 .mobile-nav-link:active {
     background-color: rgba(0, 0, 0, 0.15);
-    color: #FFB703;
+    color: var(--lemark-yellow);
 }
 
-/* Sous-menu mobile */
 .mobile-submenu {
     background-color: rgba(0, 0, 0, 0.2);
-    border-left: 4px solid #FFB703;
+    border-left: 4px solid var(--lemark-yellow);
 }
 
 .mobile-submenu-link {
@@ -222,117 +282,325 @@
 
 .mobile-submenu-link:hover,
 .mobile-submenu-link:active {
-    color: #FFB703;
+    color: var(--lemark-yellow);
 }
 
-
 /* ===================================================
-   SECTION HÉRO : ACIER LOURD BRUT ET PLEINE LARGEUR
+   SECTION HÉRO : ACIER PUR
    =================================================== */
 
 .hero-fullwidth-steel {
     width: 100%;
-    margin-top: -5.5rem; /* Raccorde la section directement sous le bandeau charcoal */
-    padding-top: 7rem;   /* Récupère l'espace nécessaire pour ne pas cacher le texte sous le logo */
-    padding-bottom: 5rem;
+    margin-top: -5.5rem;
+    padding-top: 7rem;
+    padding-bottom: 5.5rem;
     position: relative;
-    border-radius: 0 !important; /* Coins droits de bord en bord */
-
-    /* Texture métallique renforcée : micro-stries croisées + nuances d'acier brut */
+    border-radius: 0 !important;
     background-color: #17181C;
     background-image:
-            repeating-linear-gradient(60deg, rgba(255, 255, 255, 0.04) 0px, rgba(255, 255, 255, 0.04) 1px, transparent 1px, transparent 4px),
-            repeating-linear-gradient(-60deg, rgba(0, 0, 0, 0.45) 0px, rgba(0, 0, 0, 0.45) 2px, transparent 2px, transparent 5px),
-            linear-gradient(135deg, #121316 0%, #2A2D34 30%, #1A1B20 60%, #30343C 85%, #141518 100%);
-    box-shadow: inset 0 6px 18px rgba(0, 0, 0, 0.6), inset 0 -6px 18px rgba(0, 0, 0, 0.6);
-    border-bottom: 4px solid #D91D1D;
+            repeating-linear-gradient(60deg, rgba(255, 255, 255, 0.035) 0px, rgba(255, 255, 255, 0.035) 1px, transparent 1px, transparent 4px),
+            repeating-linear-gradient(-60deg, rgba(0, 0, 0, 0.5) 0px, rgba(0, 0, 0, 0.5) 2px, transparent 2px, transparent 5px),
+            linear-gradient(135deg, #121316 0%, #25282F 35%, #18191E 65%, #2D3139 88%, #141518 100%);
+    box-shadow: inset 0 6px 20px rgba(0, 0, 0, 0.7), inset 0 -6px 20px rgba(0, 0, 0, 0.7);
+    border-bottom: 4px solid var(--lemark-red);
     overflow: hidden;
 }
-
-/* ===================================================
-   ÎLOT DE PHOTOS : 4 IMAGES ACTIVES ET FLOTTANTES
-   =================================================== */
 
 .hero-island-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1.25rem;
     position: relative;
-    padding: 1rem;
+    padding: 0.5rem;
 }
 
-/* Carte de chaque photo dans l'îlot */
 .island-photo-card {
-    background-color: #FFFFFF;
-    border-radius: 18px;
-    padding: 0.75rem;
-    height: 190px;
+    background-color: #1D1F24;
+    border-radius: 16px;
+    padding: 0;
+    height: 195px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
-    border: 2px solid rgba(255, 255, 255, 0.15);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     overflow: hidden;
 }
 
 .island-photo-card img {
-    max-height: 100%;
-    max-width: 100%;
-    object-fit: contain;
-    transition: transform 0.3s ease;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 0.4s ease;
 }
 
 .island-photo-card:hover {
-    transform: scale(1.06) translateY(-4px) !important;
-    box-shadow: 0 16px 32px rgba(217, 29, 29, 0.35);
+    transform: scale(1.05) translateY(-4px) !important;
+    border-color: var(--lemark-red);
+    box-shadow: 0 14px 30px rgba(217, 29, 29, 0.38);
     z-index: 10;
 }
 
-/* Animations de flottement décalées pour l'effet vivant */
-.float-island-1 {
-    animation: floatingIslandA 6s ease-in-out infinite;
+.island-photo-card:hover img {
+    transform: scale(1.06);
 }
 
-.float-island-2 {
-    animation: floatingIslandB 7s ease-in-out infinite 0.6s;
-}
-
-.float-island-3 {
-    animation: floatingIslandB 6.5s ease-in-out infinite 1.2s;
-}
-
-.float-island-4 {
-    animation: floatingIslandA 7.5s ease-in-out infinite 1.8s;
-}
+.float-island-1 { animation: floatingIslandA 6s ease-in-out infinite; }
+.float-island-2 { animation: floatingIslandB 7s ease-in-out infinite 0.6s; }
+.float-island-3 { animation: floatingIslandB 6.5s ease-in-out infinite 1.2s; }
+.float-island-4 { animation: floatingIslandA 7.5s ease-in-out infinite 1.8s; }
 
 @keyframes floatingIslandA {
-    0%, 100% {
-        transform: translateY(0px) rotate(0deg);
-    }
-    50% {
-        transform: translateY(-8px) rotate(1deg);
-    }
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-7px) rotate(0.8deg); }
 }
 
 @keyframes floatingIslandB {
-    0%, 100% {
-        transform: translateY(0px) rotate(0deg);
-    }
-    50% {
-        transform: translateY(8px) rotate(-1deg);
-    }
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(7px) rotate(-0.8deg); }
 }
 
-/* Adaptation pour téléphones */
+/* ===================================================
+   SECTION PRODUITS : TÔLE LARMÉE INDUSTRIELLE (DIAMOND PLATE)
+   =================================================== */
+
+.section-categories {
+    /* Dégradé acier de base */
+    background-color: #D6DAE0;
+
+    /* Motif tôle larmée (embossage par contraste ombre/lumière en pur SVG) */
+    background-image:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cg fill='none' stroke-linecap='round'%3E%3C!-- Relief sombre (ombres) --%3E%3Cpath d='M10,4 L14,14 L10,24 M32,26 L36,36 L32,46 M26,10 L36,14 L46,10 M4,32 L14,36 L24,32' stroke='%2318191B' stroke-opacity='0.12' stroke-width='1.5'/%3E%3C!-- Relief clair (reflet métallique) --%3E%3Cpath d='M10,4 L6,14 L10,24 M32,26 L28,36 L32,46 M26,10 L36,6 L46,10 M4,32 L14,28 L24,32' stroke='%23FFFFFF' stroke-opacity='0.55' stroke-width='1.5'/%3E%3C!-- Arête centrale --%3E%3Cpath d='M10,4 L10,24 M32,26 L32,46 M26,10 L46,10 M4,32 L24,32' stroke='%23FFFFFF' stroke-opacity='0.35' stroke-width='1'/%3E%3C/g%3E%3C/svg%3E"),
+            linear-gradient(180deg, #CFD4DB 0%, #DFE3E8 100%);
+    background-size: 44px 44px, 100% 100%;
+
+    padding-top: 4.5rem;
+    padding-bottom: 5.5rem;
+    position: relative;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* En-tête industriel avec marqueur rouge */
+.section-header-industrial {
+    border-left: 5px solid var(--lemark-red);
+    padding-left: 1.25rem;
+}
+
+.section-title-industrial {
+    font-size: clamp(2rem, 4vw, 2.6rem);
+    font-weight: 950;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: #18191B;
+    line-height: 1;
+    margin: 0;
+}
+
+.section-title-industrial span {
+    color: var(--lemark-red);
+}
+
+/* Bouton catalogue technique */
+.btn-catalogue-link {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    color: #18191B;
+    text-decoration: none;
+    text-transform: uppercase;
+    border: 1.5px solid #A8ADB7;
+    padding: 0.55rem 1.15rem;
+    border-radius: 6px;
+    background-color: #FFFFFF;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+}
+
+.btn-catalogue-link:hover {
+    background-color: var(--lemark-red);
+    border-color: var(--lemark-red);
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(217, 29, 29, 0.25);
+    transform: translateX(3px);
+}
+
+/* ===================================================
+   PILULES PRODUITS : PLAQUE RIVETÉE & HOT WELD
+   =================================================== */
+
+.category-pill-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.4rem;
+}
+
+.category-pill-blend {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: #FFFFFF;
+    border: 2px solid #C4C8D0;
+    border-radius: 12px;
+    padding: 0.75rem 1.4rem 0.75rem 0.9rem;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    min-height: 96px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+/* Bande de sécurité jaune/noir */
+.category-pill-blend::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 6px;
+    background: repeating-linear-gradient(
+            -45deg,
+            #FFB703,
+            #FFB703 6px,
+            #18191B 6px,
+            #18191B 12px
+    );
+    transition: width 0.2s ease;
+}
+
+/* 4 Rivets d'angle */
+.rivet {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #F0F2F5, #8A92A0 70%, #2A2F3A);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 1px 2px rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+    z-index: 5;
+}
+
+.rivet-tl { top: 6px; left: 12px; }
+.rivet-tr { top: 6px; right: 8px; }
+.rivet-bl { bottom: 6px; left: 12px; }
+.rivet-br { bottom: 6px; right: 8px; }
+
+/* Effet soudure incandescente */
+.category-pill-blend:hover {
+    transform: translateY(-4px);
+    border-color: var(--lemark-red);
+    box-shadow:
+            0 8px 24px rgba(217, 29, 29, 0.35),
+            0 0 18px rgba(255, 183, 3, 0.3),
+            inset 0 0 8px rgba(217, 29, 29, 0.12);
+}
+
+.category-pill-blend:hover::before {
+    width: 9px;
+}
+
+.category-pill-blend-thumb {
+    width: 120px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: linear-gradient(180deg, #EDEFF3 0%, #DFE3E8 100%);
+    border: 1px solid #D0D4DC;
+    border-radius: 8px;
+    padding: 4px;
+    margin-left: 6px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.category-pill-blend-thumb img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.25));
+    transition: transform 0.3s ease;
+}
+
+.category-pill-blend:hover .category-pill-blend-thumb img {
+    transform: scale(1.08);
+}
+
+.category-pill-blend-divider {
+    width: 2px;
+    height: 52px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, #B8BDC7 50%, rgba(0,0,0,0.05) 100%);
+    margin: 0 1.1rem 0 0.85rem;
+    flex-shrink: 0;
+    transition: background 0.25s ease;
+}
+
+.category-pill-blend:hover .category-pill-blend-divider {
+    background: var(--lemark-red);
+}
+
+.category-pill-blend-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.category-pill-blend-title {
+    color: #18191B;
+    font-weight: 900;
+    font-size: 1.15rem;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    line-height: 1.15;
+    margin-top: 2px;
+    transition: color 0.25s ease;
+}
+
+.category-pill-blend:hover .category-pill-blend-title {
+    color: var(--lemark-red);
+}
+
+/* ===================================================
+   RESPONSIVE
+   =================================================== */
+
 @media (max-width: 991px) {
     .hero-fullwidth-steel {
         margin-top: -2rem;
         padding-top: 3.5rem;
         padding-bottom: 3.5rem;
     }
-
     .island-photo-card {
         height: 135px;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-categories {
+        padding-top: 3rem;
+        padding-bottom: 3.5rem;
+    }
+
+    .category-pill-blend {
+        min-height: 82px;
+        padding: 0.6rem 1rem 0.6rem 0.6rem;
+    }
+
+    .category-pill-blend-thumb {
+        width: 95px;
+        height: 60px;
+    }
+
+    .category-pill-blend-divider {
+        height: 42px;
+        margin: 0 0.75rem;
+    }
+
+    .category-pill-blend-title {
+        font-size: 1rem;
     }
 }

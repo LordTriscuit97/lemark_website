@@ -8,34 +8,44 @@ function Accueil() {
         { src: '/images/general/main4.png', anim: 'float-island-4' }
     ];
 
+    const categories = [
+        { id: 1, nom: 'Surfaceuses', path: '/categorie/1' },
+        { id: 2, nom: 'Rouleaux & Compacteurs', path: '/categorie/2' },
+        { id: 3, nom: 'Débuscage & Foresterie', path: '/categorie/3' },
+        { id: 4, nom: 'Remorques', path: '/categorie/4' },
+        { id: 5, nom: 'Niveleuses & Herses', path: '/categorie/5' },
+        { id: 6, nom: 'Foyers Extérieurs', path: '/categorie/6' }
+    ];
+
     return (
-        <div className="pb-5">
-            {/* Section Héro : Pleine largeur bord en bord & Acier texturé lourd */}
+        <div>
+            {/* ================= SECTION HÉRO ================= */}
             <section className="hero-fullwidth-steel">
                 <div className="container">
                     <div className="row align-items-center g-5">
 
-                        {/* Colonne Texte & Appel à l'action */}
-                        <div className="col-lg-6">
+                        <div className="col-lg-6 pe-lg-4">
                             <h1 className="display-4 fw-bolder mb-4 text-white" style={{ lineHeight: '1.15' }}>
                                 <span className="d-block mb-2" style={{ letterSpacing: '1.5px' }}>
-                                    <span style={{ color: '#D91D1D' }}>L</span>EMAR<span style={{ color: '#D91D1D' }}>K</span>,
+                                    <span style={{ color: 'var(--lemark-red)' }}>L</span>EMAR<span style={{ color: 'var(--lemark-red)' }}>K</span>,
                                 </span>
-                                Des équipements robustes, conçus pour travailler <span style={{ color: '#D91D1D' }}>aussi fort que vous.</span>
+                                Des équipements robustes, conçus pour travailler <span style={{ color: 'var(--lemark-red)' }}>aussi fort que vous.</span>
                             </h1>
 
-                            <p className="fs-4 mb-5" style={{ lineHeight: '1.6', color: '#B4B8C2' }}>
+                            <p className="fs-5 mb-5" style={{ lineHeight: '1.65', color: '#B4B8C2' }}>
                                 De la foresterie à l'entretien de sentiers, les Entreprises Lemark fabriquent des solutions durables en acier de qualité supérieure. Simple d'utilisation, impossible à casser.
                             </p>
 
                             <div>
-                                <Link to="/histoire" className="btn btn-yellow-pill text-decoration-none">
-                                    En savoir plus sur Lemark
+                                <Link to="/catalogue" className="btn btn-yellow-pill text-decoration-none me-3 mb-2">
+                                    Voir les équipements
+                                </Link>
+                                <Link to="/histoire" className="btn btn-outline-light rounded-pill px-4 py-3 fw-bold mb-2">
+                                    Notre savoir-faire
                                 </Link>
                             </div>
                         </div>
 
-                        {/* Colonne Îlot des 4 photos animées */}
                         <div className="col-lg-6">
                             <div className="hero-island-grid">
                                 {imagesHero.map((item, index) => (
@@ -60,53 +70,55 @@ function Accueil() {
                 </div>
             </section>
 
-            {/* Section Catégories */}
-            <section className="container pt-5">
-                <h2 className="fw-bolder mb-5 text-center fs-1">Nos Catégories</h2>
+            {/* ================= SECTION PRODUITS (TÔLE LARMÉE) ================= */}
+            <section className="section-categories">
+                <div className="container">
 
-                <div className="row g-4 justify-content-center">
-                    {/* Tuile 1 */}
-                    <div className="col-12 col-sm-6 col-lg-4">
-                        <Link to="/categorie/1" className="text-decoration-none text-dark">
-                            <div className="card-lemark h-100 p-4 text-center">
-                                <div className="bg-lemark-bg-offwhite rounded-4 mb-3 d-flex align-items-center justify-content-center" style={{height: '180px'}}>
-                                    <img src="/images/produits/defaut_produit.png" alt="Surfaceuses" className="img-fluid" style={{maxHeight: '140px'}} />
+                    <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4">
+                        <div className="section-header-industrial">
+                            <h2 className="section-title-industrial">
+                                Nos <span>Produits</span>
+                            </h2>
+                        </div>
+
+                        <Link to="/catalogue" className="btn-catalogue-link d-inline-flex align-items-center gap-2 mt-3 mt-md-0">
+                            <span>Catalogue complet</span>
+                            <span aria-hidden="true">&rarr;</span>
+                        </Link>
+                    </div>
+
+                    <div className="category-pill-grid">
+                        {categories.map((cat) => (
+                            <Link
+                                key={cat.id}
+                                to={cat.path}
+                                className="category-pill-blend"
+                            >
+                                <span className="rivet rivet-tl" />
+                                <span className="rivet rivet-tr" />
+                                <span className="rivet rivet-bl" />
+                                <span className="rivet rivet-br" />
+
+                                <div className="category-pill-blend-thumb">
+                                    <img
+                                        src="/images/general/thumbnail_remorque.png"
+                                        alt={cat.nom}
+                                        onError={(e) => {
+                                            e.currentTarget.onerror = null;
+                                            e.currentTarget.src = '/images/produits/defaut_produit.png';
+                                        }}
+                                    />
                                 </div>
-                                <h3 className="h4 fw-bold mb-0">Surfaceuses</h3>
-                            </div>
-                        </Link>
-                    </div>
 
-                    {/* Tuile 2 */}
-                    <div className="col-12 col-sm-6 col-lg-4">
-                        <Link to="/categorie/4" className="text-decoration-none text-dark">
-                            <div className="card-lemark h-100 p-4 text-center">
-                                <div className="bg-lemark-bg-offwhite rounded-4 mb-3 d-flex align-items-center justify-content-center" style={{height: '180px'}}>
-                                    <img src="/images/produits/defaut_produit.png" alt="Remorques" className="img-fluid" style={{maxHeight: '140px'}} />
+                                <div className="category-pill-blend-divider" />
+
+                                <div className="category-pill-blend-content">
+                                    <span className="category-pill-blend-title">{cat.nom}</span>
                                 </div>
-                                <h3 className="h4 fw-bold mb-0">Remorques</h3>
-                            </div>
-                        </Link>
+                            </Link>
+                        ))}
                     </div>
 
-                    {/* Tuile 3 */}
-                    <div className="col-12 col-sm-6 col-lg-4">
-                        <Link to="/categorie/6" className="text-decoration-none text-dark">
-                            <div className="card-lemark h-100 p-4 text-center">
-                                <div className="bg-lemark-bg-offwhite rounded-4 mb-3 d-flex align-items-center justify-content-center" style={{height: '180px'}}>
-                                    <img src="/images/produits/defaut_produit.png" alt="Foyers Extérieurs" className="img-fluid" style={{maxHeight: '140px'}} />
-                                </div>
-                                <h3 className="h4 fw-bold mb-0">Foyers Extérieurs</h3>
-                            </div>
-                        </Link>
-                    </div>
-
-                    {/* Bouton pour tout voir */}
-                    <div className="col-12 text-center mt-5">
-                        <Link to="/catalogue" className="btn btn-outline-dark fw-bold rounded-pill px-5 py-3 fs-5 hover-lift">
-                            Parcourir tous les équipements
-                        </Link>
-                    </div>
                 </div>
             </section>
         </div>
