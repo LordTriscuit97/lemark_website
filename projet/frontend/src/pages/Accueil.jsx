@@ -1,66 +1,111 @@
 import { Link } from 'react-router-dom';
 
 function Accueil() {
+    const imagesHero = [
+        { src: '/images/general/main1.png', anim: 'float-island-1' },
+        { src: '/images/general/main2.png', anim: 'float-island-2' },
+        { src: '/images/general/main3.png', anim: 'float-island-3' },
+        { src: '/images/general/main4.png', anim: 'float-island-4' }
+    ];
+
     return (
-        <div>
-            {/* Section Héro : Impact visuel immédiat */}
-            <section className="bg-lemark-dark text-white py-5 py-md-5 px-3">
-                <div className="container py-5 my-5">
-                    <div className="row align-items-center">
-                        <div className="col-lg-7">
-                            <h1 className="display-4 fw-bolder mb-4">
-                                DES ÉQUIPEMENTS DE VTT <span className="text-lemark-red">BÂTIS POUR DURER.</span>
+        <div className="pb-5">
+            {/* Section Héro : Pleine largeur bord en bord & Acier texturé lourd */}
+            <section className="hero-fullwidth-steel">
+                <div className="container">
+                    <div className="row align-items-center g-5">
+
+                        {/* Colonne Texte & Appel à l'action */}
+                        <div className="col-lg-6">
+                            <h1 className="display-4 fw-bolder mb-4 text-white" style={{ lineHeight: '1.15' }}>
+                                <span className="d-block mb-2" style={{ letterSpacing: '1.5px' }}>
+                                    <span style={{ color: '#D91D1D' }}>L</span>EMAR<span style={{ color: '#D91D1D' }}>K</span>,
+                                </span>
+                                Des équipements robustes, conçus pour travailler <span style={{ color: '#D91D1D' }}>aussi fort que vous.</span>
                             </h1>
-                            <p className="lead mb-5 fs-4 text-light">
-                                Ne perdez plus de temps avec de la machinerie fragile. Nos surfaceuses et remorques industrielles sont conçues pour accomplir le travail lourd, année après année.
+
+                            <p className="fs-4 mb-5" style={{ lineHeight: '1.6', color: '#B4B8C2' }}>
+                                De la foresterie à l'entretien de sentiers, les Entreprises Lemark fabriquent des solutions durables en acier de qualité supérieure. Simple d'utilisation, impossible à casser.
                             </p>
-                            <div className="d-grid gap-3 d-sm-flex">
-                                <Link to="/catalogue" className="btn btn-lemark btn-lg px-5 py-3">Voir le catalogue</Link>
-                                <a href="tel:18005550199" className="btn btn-outline-light btn-lg px-5 py-3 fw-bold">Appeler un expert</a>
+
+                            <div>
+                                <Link to="/histoire" className="btn btn-yellow-pill text-decoration-none">
+                                    En savoir plus sur Lemark
+                                </Link>
                             </div>
                         </div>
-                        <div className="col-lg-5 mt-5 mt-lg-0 text-center">
-                            {/* Espace pour une grosse image d'équipement en action */}
-                            <div className="bg-secondary rounded shadow-lg d-flex align-items-center justify-content-center" style={{height: '400px'}}>
-                                <span className="text-white fw-bold fs-4">[Photo d'une surfaceuse en pleine action]</span>
+
+                        {/* Colonne Îlot des 4 photos animées */}
+                        <div className="col-lg-6">
+                            <div className="hero-island-grid">
+                                {imagesHero.map((item, index) => (
+                                    <div
+                                        key={index}
+                                        className={`island-photo-card ${item.anim}`}
+                                    >
+                                        <img
+                                            src={item.src}
+                                            alt={`Équipement Lemark ${index + 1}`}
+                                            onError={(e) => {
+                                                e.currentTarget.onerror = null;
+                                                e.currentTarget.src = '/images/produits/defaut_produit.png';
+                                            }}
+                                        />
+                                    </div>
+                                ))}
                             </div>
                         </div>
+
                     </div>
                 </div>
             </section>
 
-            {/* Section À Propos : La "Bullshit" corporative qui vend la qualité */}
-            <section className="py-5 bg-white">
-                <div className="container py-5">
-                    <div className="row justify-content-center text-center mb-5">
-                        <div className="col-lg-8">
-                            <h2 className="fw-bolder mb-3">À Propos de Lemark</h2>
-                            <div className="mx-auto bg-lemark-red mb-4" style={{height: '4px', width: '80px'}}></div>
-                            <p className="fs-5 text-secondary">
-                                Fondée sur des principes de rigueur et d'ingénierie supérieure, Les Entreprises Lemark redéfinissent les standards de l'industrie des accessoires de VTT. Chaque pièce d'équipement qui quitte notre usine est le résultat de tests exhaustifs et d'un savoir-faire intransigeant. Nous n'utilisons que des aciers de première qualité et des procédés d'assemblage éprouvés. Quand vous achetez Lemark, vous investissez dans la tranquillité d'esprit et la performance brute.
-                            </p>
-                        </div>
+            {/* Section Catégories */}
+            <section className="container pt-5">
+                <h2 className="fw-bolder mb-5 text-center fs-1">Nos Catégories</h2>
+
+                <div className="row g-4 justify-content-center">
+                    {/* Tuile 1 */}
+                    <div className="col-12 col-sm-6 col-lg-4">
+                        <Link to="/categorie/1" className="text-decoration-none text-dark">
+                            <div className="card-lemark h-100 p-4 text-center">
+                                <div className="bg-lemark-bg-offwhite rounded-4 mb-3 d-flex align-items-center justify-content-center" style={{height: '180px'}}>
+                                    <img src="/images/produits/defaut_produit.png" alt="Surfaceuses" className="img-fluid" style={{maxHeight: '140px'}} />
+                                </div>
+                                <h3 className="h4 fw-bold mb-0">Surfaceuses</h3>
+                            </div>
+                        </Link>
                     </div>
 
-                    <div className="row g-4 mt-4 text-center">
-                        <div className="col-md-4">
-                            <div className="p-4 border rounded shadow-sm h-100 bg-light">
-                                <h3 className="h4 fw-bold text-lemark-red mb-3">Fabrication Robuste</h3>
-                                <p className="mb-0 fs-5 text-secondary">Des soudures industrielles et des matériaux sélectionnés pour résister aux pires conditions météorologiques.</p>
+                    {/* Tuile 2 */}
+                    <div className="col-12 col-sm-6 col-lg-4">
+                        <Link to="/categorie/4" className="text-decoration-none text-dark">
+                            <div className="card-lemark h-100 p-4 text-center">
+                                <div className="bg-lemark-bg-offwhite rounded-4 mb-3 d-flex align-items-center justify-content-center" style={{height: '180px'}}>
+                                    <img src="/images/produits/defaut_produit.png" alt="Remorques" className="img-fluid" style={{maxHeight: '140px'}} />
+                                </div>
+                                <h3 className="h4 fw-bold mb-0">Remorques</h3>
                             </div>
-                        </div>
-                        <div className="col-md-4">
-                            <div className="p-4 border rounded shadow-sm h-100 bg-light">
-                                <h3 className="h4 fw-bold text-lemark-red mb-3">Design Intuitif</h3>
-                                <p className="mb-0 fs-5 text-secondary">Aucune installation complexe. Nos équipements s'attachent rapidement et opèrent sans faille.</p>
+                        </Link>
+                    </div>
+
+                    {/* Tuile 3 */}
+                    <div className="col-12 col-sm-6 col-lg-4">
+                        <Link to="/categorie/6" className="text-decoration-none text-dark">
+                            <div className="card-lemark h-100 p-4 text-center">
+                                <div className="bg-lemark-bg-offwhite rounded-4 mb-3 d-flex align-items-center justify-content-center" style={{height: '180px'}}>
+                                    <img src="/images/produits/defaut_produit.png" alt="Foyers Extérieurs" className="img-fluid" style={{maxHeight: '140px'}} />
+                                </div>
+                                <h3 className="h4 fw-bold mb-0">Foyers Extérieurs</h3>
                             </div>
-                        </div>
-                        <div className="col-md-4">
-                            <div className="p-4 border rounded shadow-sm h-100 bg-light">
-                                <h3 className="h4 fw-bold text-lemark-red mb-3">Support Direct</h3>
-                                <p className="mb-0 fs-5 text-secondary">Un doute sur les dimensions ? Notre équipe technique répond au téléphone immédiatement.</p>
-                            </div>
-                        </div>
+                        </Link>
+                    </div>
+
+                    {/* Bouton pour tout voir */}
+                    <div className="col-12 text-center mt-5">
+                        <Link to="/catalogue" className="btn btn-outline-dark fw-bold rounded-pill px-5 py-3 fs-5 hover-lift">
+                            Parcourir tous les équipements
+                        </Link>
                     </div>
                 </div>
             </section>

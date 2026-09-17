@@ -1,58 +1,338 @@
-:root {
-    --lemark-red: #D91614;
-    --lemark-black: #111111;
-    --lemark-white: #F8F9FA;
+/* ===================================================
+   CONFIGURATION NAVBAR DESKTOP
+   =================================================== */
+
+.header-wrapper-desktop {
+    position: relative;
+    width: 100%;
+    height: 90px;
+    /* Dégradé charcoal adouci et feutré */
+    background: linear-gradient(180deg, #18191B 0%, #27292E 100%);
+    margin-bottom: 5.5rem;
 }
 
-body {
-    background-color: var(--lemark-white);
-    color: var(--lemark-black);
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
+.top-info-bar {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    font-size: 0.85rem;
 }
 
-/* Boutons massifs et industriels pour faciliter le clic */
-.btn-lemark {
-    background-color: var(--lemark-red);
-    color: white;
-    font-weight: 700;
-    text-transform: uppercase;
-    padding: 1rem 2rem;
-    border: none;
-    border-radius: 4px;
-    transition: all 0.2s ease-in-out;
-    font-size: 1.1rem;
+/* Boîte rouge : dégradé subtil et naturel */
+.navbar-red-pill-desktop {
+    position: absolute;
+    top: 44px;
+    right: 0;
+    left: 275px; /* Dégage l'espace exact pour le logo */
+    height: 60px;
+    background: linear-gradient(90deg, #D91D1D 0%, #BF1414 100%);
+    border-radius: 20px 0 0 20px;
+    box-shadow: -4px 6px 15px rgba(0, 0, 0, 0.22);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem 0 2rem;
+    z-index: 10;
+    overflow: visible; /* Permet au menu déroulant de sortir de la barre */
 }
 
-.btn-lemark:hover, .btn-lemark:focus {
-    background-color: var(--lemark-black);
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+/* Logo : centré horizontalement entre 0 et 275px, et verticalement à 74px */
+.navbar-logo-desktop {
+    position: absolute;
+    left: 0;
+    width: 275px; /* Même valeur que le 'left' de .navbar-red-pill-desktop */
+    top: 74px;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 25;
 }
 
-.bg-lemark-dark {
-    background-color: var(--lemark-black);
-    color: white;
+.navbar-logo-desktop img {
+    height: 140px; /* Ajuste cette hauteur comme tu veux, le centrage restera parfait */
+    width: auto;
+    display: block;
+    filter: drop-shadow(0 5px 12px rgba(0, 0, 0, 0.28));
 }
 
-.text-lemark-red {
-    color: var(--lemark-red);
-}
-
-/* Navigation robuste */
-.navbar {
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-.nav-link {
-    font-weight: 600;
-    font-size: 1.1rem;
-    padding: 1rem !important;
-}
-
-/* Typographie de confiance */
-h1, h2, h3 {
+.nav-pill-link {
+    color: #FFFFFF;
+    text-decoration: none;
     font-weight: 800;
-    letter-spacing: -0.5px;
+    font-size: 1.05rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.4rem 0.75rem;
+    border-radius: 8px;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.nav-pill-link:hover {
+    background-color: rgba(0, 0, 0, 0.18);
+    color: #FFB703;
+    transform: translateY(-1px);
+}
+
+.nav-separator {
+    width: 2px;
+    height: 20px;
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Menu déroulant Desktop "Nos Produits" */
+.nav-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.nav-dropdown-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.nav-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #FFFFFF;
+    min-width: 250px;
+    border-radius: 12px;
+    padding: 0.5rem 0;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    z-index: 1000;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.dropdown-item-custom {
+    display: block;
+    padding: 0.65rem 1.25rem;
+    color: #27292E;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.dropdown-item-custom:hover {
+    background-color: #F4F5F7;
+    color: #D91D1D;
+}
+
+.dropdown-divider-custom {
+    height: 1px;
+    background-color: #E5E7EB;
+    margin: 0.4rem 0;
+}
+
+/* ===================================================
+   CONFIGURATION NAVBAR MOBILE & ANIMATION DÉROULANTE
+   =================================================== */
+
+.header-wrapper-mobile {
+    background: linear-gradient(180deg, #18191B 0%, #27292E 100%);
+    border-bottom: 3px solid #D91D1D;
+    margin-bottom: 2rem;
+}
+
+.mobile-info-strip {
+    background-color: rgba(0, 0, 0, 0.25);
+    color: #DDD;
+    font-size: 0.75rem;
+    padding: 0.45rem 0.75rem;
+}
+
+.btn-hamburger {
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.btn-hamburger:focus, .btn-hamburger:hover {
+    border-color: #FFB703;
+}
+
+.hamburger-line {
+    width: 24px;
+    height: 3px;
+    background-color: #FFFFFF;
+    border-radius: 2px;
+}
+
+/* Tiroir mobile */
+.mobile-menu-drawer {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    background: linear-gradient(180deg, #D91D1D 0%, #BF1414 100%);
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.25);
+}
+
+.mobile-menu-drawer.open {
+    max-height: 850px; /* Assez d'espace pour le sous-menu déployé */
+    opacity: 1;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.mobile-nav-link {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 1.15rem;
+    text-transform: uppercase;
+    display: block;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link:active {
+    background-color: rgba(0, 0, 0, 0.15);
+    color: #FFB703;
+}
+
+/* Sous-menu mobile */
+.mobile-submenu {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-left: 4px solid #FFB703;
+}
+
+.mobile-submenu-link {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    display: block;
+    padding: 0.75rem 1.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.mobile-submenu-link:hover,
+.mobile-submenu-link:active {
+    color: #FFB703;
+}
+
+
+/* ===================================================
+   SECTION HÉRO : ACIER LOURD BRUT ET PLEINE LARGEUR
+   =================================================== */
+
+.hero-fullwidth-steel {
+    width: 100%;
+    margin-top: -5.5rem; /* Raccorde la section directement sous le bandeau charcoal */
+    padding-top: 7rem;   /* Récupère l'espace nécessaire pour ne pas cacher le texte sous le logo */
+    padding-bottom: 5rem;
+    position: relative;
+    border-radius: 0 !important; /* Coins droits de bord en bord */
+
+    /* Texture métallique renforcée : micro-stries croisées + nuances d'acier brut */
+    background-color: #17181C;
+    background-image:
+            repeating-linear-gradient(60deg, rgba(255, 255, 255, 0.04) 0px, rgba(255, 255, 255, 0.04) 1px, transparent 1px, transparent 4px),
+            repeating-linear-gradient(-60deg, rgba(0, 0, 0, 0.45) 0px, rgba(0, 0, 0, 0.45) 2px, transparent 2px, transparent 5px),
+            linear-gradient(135deg, #121316 0%, #2A2D34 30%, #1A1B20 60%, #30343C 85%, #141518 100%);
+    box-shadow: inset 0 6px 18px rgba(0, 0, 0, 0.6), inset 0 -6px 18px rgba(0, 0, 0, 0.6);
+    border-bottom: 4px solid #D91D1D;
+    overflow: hidden;
+}
+
+/* ===================================================
+   ÎLOT DE PHOTOS : 4 IMAGES ACTIVES ET FLOTTANTES
+   =================================================== */
+
+.hero-island-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    position: relative;
+    padding: 1rem;
+}
+
+/* Carte de chaque photo dans l'îlot */
+.island-photo-card {
+    background-color: #FFFFFF;
+    border-radius: 18px;
+    padding: 0.75rem;
+    height: 190px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.island-photo-card img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.island-photo-card:hover {
+    transform: scale(1.06) translateY(-4px) !important;
+    box-shadow: 0 16px 32px rgba(217, 29, 29, 0.35);
+    z-index: 10;
+}
+
+/* Animations de flottement décalées pour l'effet vivant */
+.float-island-1 {
+    animation: floatingIslandA 6s ease-in-out infinite;
+}
+
+.float-island-2 {
+    animation: floatingIslandB 7s ease-in-out infinite 0.6s;
+}
+
+.float-island-3 {
+    animation: floatingIslandB 6.5s ease-in-out infinite 1.2s;
+}
+
+.float-island-4 {
+    animation: floatingIslandA 7.5s ease-in-out infinite 1.8s;
+}
+
+@keyframes floatingIslandA {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-8px) rotate(1deg);
+    }
+}
+
+@keyframes floatingIslandB {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(8px) rotate(-1deg);
+    }
+}
+
+/* Adaptation pour téléphones */
+@media (max-width: 991px) {
+    .hero-fullwidth-steel {
+        margin-top: -2rem;
+        padding-top: 3.5rem;
+        padding-bottom: 3.5rem;
+    }
+
+    .island-photo-card {
+        height: 135px;
+    }
 }
