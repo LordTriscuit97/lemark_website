@@ -1,0 +1,80 @@
+DOSSIER D'ARCHITECTURE ET DE SPÉCIFICATIONS DU PROJET : REFONTE WEB LES ENTREPRISES LEMARK1. Contexte d'affaires et identité de l'entreprise1.1 Présentation généraleEntreprise : Les Entreprises Lemark.Localisation : Saint-Cyrille-de-Wendover, Québec, Canada.Secteur d'activité : Conception et fabrication mécanique d'équipements spécialisés et d'outillage tracté/porté pour VTT (quads), véhicules utilitaires récréatifs (côte-à-côte / UTV) et tracteurs compacts ou agricoles.Marchés cibles : Entretien de sentiers récréatifs hivernaux (motoneige, fatbike, ski de fond, marche), travaux d'érablière et de foresterie légère, terrassement et nivellement de chemins de gravier, transport utilitaire hors route et loisirs extérieurs.1.2 Philosophie technique et engagement qualitéL'argumentaire de vente et l'image de marque de Lemark reposent sur une durabilité éprouvée en conditions extrêmes :Acier neuf de premier grade : Rejet systématique de l'acier de rebut ou de second choix ; sélection d'épaisseurs structurelles supérieures adaptées aux torsions mécaniques du tout-terrain.Traitement de surface anticorrosion industriel : Application combinée d'un apprêt époxy et d'une finition en uréthane formulée pour résister à l'abrasion abrasive, au sel de déglaçage et aux hivers québécois.Ajustabilité mécanique et dynamique : Intégration de vérins électriques (actionneurs) permettant un ajustement précis de la pénétration des couteaux et du surfaçage directement selon la nature du sol ou du manteau neigeux (durci, croûté, poudreux, granulaire).Modularité d'usure et interchangeabilité : Lames de nivellement réversibles remplaçables, options amovibles (système de conversion sur roues ou sur skis pour les remorques) prolongeant la longévité de l'équipement.2. Périmètre fonctionnel et état d'avancement du projetNature de la plateforme : Catalogue numérique d'entreprise purement consultatif (vitrine technique et fiches produits interactives).Hors périmètre (Out of Scope) : Aucune passerelle de paiement en ligne, aucun panier d'achat e-commerce direct, aucune gestion de commandes transactionnelles.État d'avancement actuel : Environ 80 %.Les APIs REST du backend sont entièrement développées et fonctionnelles.La base de données PostgreSQL est modélisée et alimentée.L'interface React affiche l'ensemble des catégories, des 15 produits industriels et de leurs 36 modèles respectifs avec leurs options compatibles.Objectif de transition pour un agent : Assurer la finalisation des derniers 20 % (gestion fine des formulaires de contact/soumission via le serveur mail, affinage de l'expérience utilisateur/UI, optimisation SEO/performances, conteneurisation finale et durcissement des schémas).3. Structure globale du dépôt (Monorepo)Le dépôt lemark_website est organisé selon une architecture monorepo séparant clairement la base de données, l'API serveur et l'interface client :Plaintextlemark_website/
+├── backend/
+│   ├── base_donnees/
+│   │   └── initialisation/
+│   │       └── 01_init.sql                # Script d'initialisation DDL
+│   └── serveur_java/                      # Application backend Quarkus
+│       ├── src/main/java/com/lemark/
+│       │   ├── dto/                       # Data Transfer Objects (formats d'exposition JSON)
+│       │   ├── mapper/                    # Mappers DTO <-> Entités
+│       │   ├── modeles/                   # Entités JPA / Panache
+│       │   ├── routes_api/                # Contrôleurs REST (JAX-RS / Quarkus REST)
+│       │   └── service/                   # Couche logique métier et orchestration
+│       ├── src/main/resources/
+│       │   └── application.properties     # Configuration Quarkus, Datasource, CORS
+│       └── pom.xml                        # Fichier de dépendances Maven Quarkus
+└── frontend/                              # SPA React
+    ├── public/
+    │   └── images/
+    │       ├── general/                   # Logos, bannières, visuels du site
+    │       ├── options/                   # Visuels spécifiques aux accessoires
+    │       └── produits/                  # Photos techniques des équipements
+    ├── src/
+    │   ├── assets/                        # Styles CSS/SCSS globaux et polices
+    │   ├── components/                    # Composants d'interface réutilisables (Navbar, Cards, etc.)
+    │   └── pages/                         # Vues complètes (Accueil, Catalogue, Détails, Contact)
+    └── package.json                       # Dépendances Node, Vite, React, Bootstrap
+4. Base de données relationnelle (PostgreSQL)4.1 Configuration et politique de persistanceNom de la base : lemark_catalogue.   Utilisateur / Mot de passe : lemark_admin / lemark_admin.   Port : 5432.   Stratégie Hibernate ORM : quarkus.hibernate-orm.database.generation=validate.   Règle critique : Hibernate ne modifie ni ne recrée les tables au démarrage. Il valide strictement la conformité entre les entités Java annotées et le schéma réel existant en base. Toute modification structurelle doit impérativement être effectuée via des scripts SQL versionnés dans backend/base_donnees/initialisation/.   4.2 Schéma physique DDL (01_init.sql)Le schéma physique est normalisé et comprend 6 tables reliées par des contraintes d'intégrité référentielle :   SQLCREATE TABLE Categorie(
+    id_categorie INTEGER,
+    nom_categorie VARCHAR(50),
+    PRIMARY KEY(id_categorie)
+);
+
+CREATE TABLE Produit(
+    id_produit INTEGER,
+    nom_produit VARCHAR(50),
+    description_courte VARCHAR(50),
+    description_longue VARCHAR(50),
+    est_nouveaute BOOLEAN,
+    id_categorie INTEGER NOT NULL,
+    PRIMARY KEY(id_produit),
+    FOREIGN KEY(id_categorie) REFERENCES Categorie(id_categorie)
+);
+
+CREATE TABLE Image_Produit(
+    id_image INTEGER,
+    id_modele INTEGER,
+    nom_fichier VARCHAR(50),
+    ordre_affichage INTEGER,
+    id_produit INTEGER NOT NULL,
+    PRIMARY KEY(id_image),
+    FOREIGN KEY(id_produit) REFERENCES Produit(id_produit)
+);
+
+CREATE TABLE Modele(
+    id_modele INTEGER,
+    sku VARCHAR(50),
+    nom_modele VARCHAR(50),
+    specifications VARCHAR(50),
+    id_produit INTEGER NOT NULL,
+    PRIMARY KEY(id_modele),
+    FOREIGN KEY(id_produit) REFERENCES Produit(id_produit)
+);
+
+CREATE TABLE Options_Equipement(
+    id_option INTEGER,
+    nom_option VARCHAR(50),
+    sku VARCHAR(50),
+    description_option VARCHAR(50),
+    nom_fichier_image VARCHAR(50),
+    PRIMARY KEY(id_option)
+);
+
+CREATE TABLE COMPATIBLE(
+    id_produit INTEGER,
+    id_option INTEGER,
+    PRIMARY KEY(id_produit, id_option),
+    FOREIGN KEY(id_produit) REFERENCES Produit(id_produit),
+    FOREIGN KEY(id_option) REFERENCES Options_Equipement(id_option)
+);
+(Note d'attention technique : Les champs descriptifs description_courte et description_longue sont pour l'instant typés en VARCHAR(50). Lors du passage en production avec des textes marketing complets, ces colonnes devront être migrées vers VARCHAR(255) ou TEXT).   5. Cartographie intégrale des données du catalogue LemarkVoici l'arborescence complète et exacte des entités stockées en base de données, reliant catégories, produits, modèles (SKU) et options compatibles :   Catégorie 1 : Surfaceuses (id_categorie: 1)Surfaceuse FAT (id_produit: 1)   Modèles :S-SF36 (id_modele: 1)   S-SF48 (id_modele: 2)   S-SF60 (id_modele: 3)   Accessoires compatibles :id_option: 1 — Re-Surfaceur (S-O-RESU)   Surfaceuse Série-Pro (id_produit: 2)   Modèles :S-SP36 (id_modele: 4)   S-SP48 (id_modele: 5)   S-SP60 (id_modele: 6)   S-SP72 (id_modele: 7)   S-SP84 (id_modele: 8)   Accessoires compatibles :id_option: 2 — Traceur-Pro (S-O-TRPR)   id_option: 3 — Traceur-Eco (S-O-TREC)   id_option: 4 — Grattoir (S-O-GRAT)   id_option: 5 — Roues (S-O-ROUE)   Catégorie 2 : Rouleaux & Compacteurs (id_categorie: 2)Rouleau à Pics Série-F (id_produit: 3)   Modèles :RC-SF60 (id_modele: 9)   RC-SF96 (id_modele: 10)   Accessoires compatibles : Aucun.   Rouleau à Pics Série-T (id_produit: 4)   Modèles :RC-ST48 (id_modele: 11)   RC-ST54 (id_modele: 12)   Accessoires compatibles : Aucun.   Rouleau à Neige Série-N (id_produit: 5)   Modèles :RC-SN54 (id_modele: 13)   Accessoires compatibles : Aucun.   Catégorie 3 : Débuscage & Foresterie (id_categorie: 3)Débusqueuse Type-S (id_produit: 6)   Modèles :DF-TS99 (id_modele: 14)   Accessoires compatibles : Aucun.   Catégorie 4 : Remorques (id_categorie: 4)Remorque RK Dompeur (id_produit: 7)   Modèles :RM-D3060SP (id_modele: 15)   RM-D3060TP (id_modele: 16)   RM-D3672TP (id_modele: 17)   RM-D4872TP (id_modele: 18)   RM-D4872TM (id_modele: 19)   Accessoires compatibles :id_option: 6 — Skis SkimarkTD (RC-O-SKIS)   Remorque RK Bascule (id_produit: 8)   Modèles :RM-B4848SM (id_modele: 20)   RM-B3060SP (id_modele: 21)   RM-B4872TM (id_modele: 22)   Accessoires compatibles :id_option: 6 — Skis SkimarkTD (RC-O-SKIS)   Remorque RK Hybride (id_produit: 9)   Modèles :RM-H3060T (id_modele: 23)   Accessoires compatibles :id_option: 6 — Skis SkimarkTD (RC-O-SKIS)   Remorque RK Déchiqueteuse (id_produit: 10)   Modèles :RM-DT99 (id_modele: 24)   Accessoires compatibles :id_option: 6 — Skis SkimarkTD (RC-O-SKIS)   Remorque RK Tôte (id_produit: 11)   Modèles :RM-TT99 (id_modele: 26)   Accessoires compatibles :id_option: 6 — Skis SkimarkTD (RC-O-SKIS)   Remorque Jardin (id_produit: 12)   Modèles :RM-JD99 (id_modele: 25)   Accessoires compatibles : Aucun.   Catégorie 5 : Niveleuses & Herses (id_categorie: 5)Niveleuse LM (id_produit: 13)   Modèles :NH-LM48 (id_modele: 27)   NH-LM60 (id_modele: 28)   NH-LM72 (id_modele: 29)   NH-LM72X3 (id_modele: 30, attelage 3 points tracteur)   Accessoires compatibles :id_option: 7 — Roues amovibles (NH-O-ROUE)   Niveleuse H (id_produit: 14)   Modèles :NH-H3 (id_modele: 31)   NH-H4 (id_modele: 32)   NH-H5 (id_modele: 33)   Accessoires compatibles :id_option: 8 — Déflecteurs (NH-O-DEFL)   Catégorie 6 : Foyers Extérieurs (id_categorie: 6)   Foyer Extérieur Série-M (id_produit: 15)   Modèles :F-M20 (id_modele: 34)   F-M26 (id_modele: 35)   F-M36 (id_modele: 36)   Accessoires compatibles : Aucun.   6. Backend : Architecture Quarkus (Java 21)6.1 Environnement et dépendances clés (pom.xml)Java Version : 21 (<maven.compiler.release>21</maven.compiler.release>).   Framework : Quarkus 3.39.2 (quarkus-bom).   Composants clés inclus :quarkus-hibernate-orm-panache : Simplification de la couche d'accès aux données sans code boilerplate.   quarkus-jdbc-postgresql : Driver JDBC PostgreSQL officiel.   quarkus-rest & quarkus-rest-jackson : Moteur REST réactif haute performance avec sérialisation/désérialisation JSON.   quarkus-mailer : Module d'envoi d'e-mails asynchrone (destiné aux formulaires de contact/demandes de soumission).   quarkus-arc : Injection de dépendances standard CDI.   rest-assured & quarkus-junit5 : Suite de tests d'intégration d'APIs.   6.2 Configuration d'exécution (application.properties)Pilote PostgreSQL : Connecté sur jdbc:postgresql://localhost:5432/lemark_catalogue.   CORS (Cross-Origin Resource Sharing) :quarkus.http.cors.enabled=true   quarkus.http.cors.origins=http://localhost:5173 (port par défaut du serveur de dev Vite)   quarkus.http.cors.methods=GET,OPTIONS,POST,PUT,DELETE   quarkus.http.cors.headers=accept,content-type,origin   6.3 Organisation interne du code Javamodeles : Entités Hibernate/Panache reflétant les tables (Categorie, Produit, Modele, OptionsEquipement, ImageProduit).dto : Objets découplés pour le transport réseau (évitant les références cycliques lors de la sérialisation Jackson et masquant les détails de persistance internes).mapper : Composants de conversion entre entités de base de données et DTOs de réponse.service : Logique métier (requêtes de filtrage par catégorie, agrégation des modèles associés à un produit, récupération des options compatibles).routes_api : Points d'entrée REST exposant les endpoints consommés par React (ex. /api/categories, /api/produits, /api/produits/{id}, /api/options).7. Frontend : Application Client (React 19 / Vite)7.1 Stack logicielle (package.json)Moteur d'assemblage : Vite 8.2.2.   Framework UI : React 19.2.8 & React DOM 19.2.8.   Routage : React Router DOM 7.18.4.   Framework CSS : Bootstrap 5.3.8 accompagné de Popper.js.   Outillage Qualité : Oxlint 1.79.0 (linter ultra-rapide basé sur Rust).   7.2 Organisation des vues et composants (src/)pages/ :Accueil : Présentation générale de l'entreprise, bannière d'accroche, mise en avant des nouveautés et accès rapide aux grandes sections (Sur Neige, Sur Terre, Au Feu).Catalogue / Catégories : Grille dynamique filtrable par type d'équipement.Détail Produit : Fiche descriptive affichant les spécifications techniques, les variantes de modèles (longueurs, largeurs) et la liste des options et accessoires compatibles.Contact / Soumission : Coordonnées de l'usine à Saint-Cyrille-de-Wendover et formulaire pour joindre l'équipe.components/ :Barre de navigation (Navbar Bootstrap réactive avec sous-menus).Cartes de produits (ProductCard), badges de nouveautés.Modales ou tableaux de spécifications comparatives par modèle.Sélecteur d'options d'équipement avec aperçu visuel.Gestion des médias (public/images/) :produits/ : Photos plein format et miniatures des machines.options/ : Visuels isolés des accessoires (traceurs, couteaux, roues, skis SkimarkTD).general/ : Éléments graphiques statiques, logos et icônes.8. Feuille de route pour les 20 % restants (Finalisation)Pour mener le projet à 100 % et assurer une mise en production irréprochable :Intégration du formulaire de contact / soumission :Brancher le formulaire React sur un endpoint Quarkus dédié (ex. POST /api/contact).Configurer quarkus-mailer dans application.properties (hôte SMTP, authentification, adresse de réception des demandes d'information de l'entreprise).   Ajustement des types de colonnes textuelles :Modifier dans le schéma SQL (01_init.sql) et dans les entités JPA la taille de description_courte et description_longue (actuellement bridées à VARCHAR(50)) afin de permettre des descriptions techniques détaillées.   Gestion des images et résilience :Mettre en place un composant d'image de secours (placeholder fallback) dans React au cas où un fichier référencé dans la table Image_Produit ou Options_Equipement est manquant sur le disque.   Validation et conteneurisation finale :Nettoyer les répertoires résiduels ou locaux (comme interface_web).S'assurer que les exclusions Git (.gitignore) couvrent bien .idea/, target/ et node_modules/.Préparer un fichier docker-compose.yml orchestrant le conteneur PostgreSQL, le conteneur Quarkus (compilé en JVM ou natif) et le build statique Vite servi par Nginx.

@@ -604,3 +604,746 @@ header.sticky-navbar {
         font-size: 1rem;
     }
 }
+
+
+/* ===================================================
+   PAGE CATALOGUE : FICHES D'ATELIER & MICRO-GRILLE
+   =================================================== */
+
+.catalog-wrapper {
+    background-color: var(--lemark-bg-offwhite);
+    /* Micro-trame millimétrée d'ingénierie (drafting grid) */
+    background-image:
+            linear-gradient(to right, rgba(24, 25, 27, 0.035) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(24, 25, 27, 0.035) 1px, transparent 1px);
+    background-size: 24px 24px;
+    min-height: 85vh;
+    padding-bottom: 5.5rem;
+}
+
+/* Bandeau d'en-tête technique collé sous la navbar */
+.catalog-header-bar {
+    width: 100%;
+    margin-top: -5.5rem;
+    padding-top: 7rem;
+    padding-bottom: 3.5rem;
+    background-color: #17181C;
+    background-image:
+            repeating-linear-gradient(60deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 4px),
+            repeating-linear-gradient(-60deg, rgba(0, 0, 0, 0.45) 0px, rgba(0, 0, 0, 0.45) 2px, transparent 2px, transparent 5px),
+            linear-gradient(135deg, #141518 0%, #24272E 50%, #17181C 100%);
+    border-bottom: 4px solid var(--lemark-red);
+    margin-bottom: 3.5rem;
+    box-shadow: inset 0 -10px 20px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 991px) {
+    .catalog-header-bar {
+        margin-top: -2rem;
+        padding-top: 3.5rem;
+        padding-bottom: 2.5rem;
+    }
+}
+
+.catalog-header-title {
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 950;
+    color: #FFFFFF;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin: 0;
+}
+
+.catalog-header-subtitle {
+    font-size: 1.05rem;
+    color: #B4B8C2;
+    margin-top: 0.75rem;
+    max-width: 650px;
+    line-height: 1.5;
+}
+
+/* Fiche Produit Verticale */
+.catalog-card-industrial {
+    position: relative;
+    background-color: #FFFFFF;
+    border: 2px solid #CED4DA;
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Liseré supérieur rouge d'atelier */
+.catalog-card-industrial::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--lemark-red);
+    z-index: 3;
+}
+
+.catalog-card-industrial:hover {
+    transform: translateY(-5px);
+    border-color: var(--lemark-red);
+    box-shadow: 0 14px 30px rgba(217, 29, 29, 0.18);
+}
+
+/* Cadre photo mécanique (plaque d'exposition) */
+.catalog-img-frame {
+    height: 240px;
+    background: linear-gradient(180deg, #F0F2F5 0%, #E2E6EA 100%);
+    border-bottom: 2px solid #DCE1E7;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.catalog-img-frame img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.22));
+    transition: transform 0.3s ease;
+}
+
+.catalog-card-industrial:hover .catalog-img-frame img {
+    transform: scale(1.06);
+}
+
+/* Badges techniques */
+.badge-tech {
+    position: absolute;
+    top: 14px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.74rem;
+    font-weight: 900;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 0.35rem 0.7rem;
+    border-radius: 6px;
+    z-index: 2;
+}
+
+/* Pastille Nouveauté Rouge Lemark */
+.badge-tech-new {
+    right: 12px;
+    background-color: var(--lemark-red);
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 3px 8px rgba(217, 29, 29, 0.4);
+}
+
+/* Pastille Options : Jaune Industriel ultra-contrasté */
+.badge-tech-options {
+    left: 12px;
+    background-color: var(--lemark-yellow);
+    color: #18191B;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+}
+
+/* Corps descriptif */
+.catalog-card-body {
+    padding: 1.6rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.catalog-card-category {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: var(--lemark-red);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+    display: block;
+}
+
+.catalog-card-title {
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: #18191B;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    line-height: 1.25;
+    margin-bottom: 0.75rem;
+}
+
+.catalog-card-desc {
+    color: #555B66;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 1.75rem;
+    flex-grow: 1;
+}
+
+/* Bouton d'action sobre en acier usiné Charcoal */
+.btn-catalog-action {
+    width: 100%;
+    background-color: #18191B;
+    color: #FFFFFF;
+    font-weight: 800;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 0.85rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #2B2D33;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.25s ease;
+}
+
+.catalog-card-industrial:hover .btn-catalog-action {
+    background-color: var(--lemark-red);
+    border-color: var(--lemark-red);
+    color: #FFFFFF;
+    box-shadow: 0 6px 16px rgba(217, 29, 29, 0.35);
+    transform: translateY(-1px);
+}
+
+
+
+
+
+/* ===================================================
+   FICHE PRODUIT DÉTAILLÉE : USINAGE & ACIER CARBONE
+   =================================================== */
+
+.detail-wrapper {
+    background-color: var(--lemark-bg-offwhite);
+    background-image:
+            linear-gradient(to right, rgba(24, 25, 27, 0.035) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(24, 25, 27, 0.035) 1px, transparent 1px);
+    background-size: 24px 24px;
+    min-height: 90vh;
+    padding-bottom: 5.5rem;
+}
+
+/* Bandeau sombre carbone scellé sous la navbar (élimine la coupure blanche) */
+.product-header-bar {
+    width: 100%;
+    margin-top: -5.5rem;
+    padding-top: 7rem;
+    padding-bottom: 2.75rem;
+    background-color: #17181C;
+    background-image:
+            repeating-linear-gradient(60deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 4px),
+            repeating-linear-gradient(-60deg, rgba(0, 0, 0, 0.45) 0px, rgba(0, 0, 0, 0.45) 2px, transparent 2px, transparent 5px),
+            linear-gradient(135deg, #141518 0%, #24272E 50%, #17181C 100%);
+    border-bottom: 4px solid var(--lemark-red);
+    margin-bottom: 3rem;
+    box-shadow: inset 0 -10px 20px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 991px) {
+    .product-header-bar {
+        margin-top: -2rem;
+        padding-top: 3.5rem;
+        padding-bottom: 2rem;
+    }
+}
+
+.product-breadcrumb-link {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--lemark-yellow);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 0.6rem;
+    transition: color 0.2s ease;
+}
+
+.product-breadcrumb-link:hover {
+    color: #FFFFFF;
+}
+
+.product-header-title {
+    font-family: 'Trebuchet MS', 'Arial Black', sans-serif;
+    font-size: clamp(2.1rem, 4.5vw, 3.2rem);
+    font-weight: 900;
+    color: #FFFFFF;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin: 0;
+}
+
+/* Barre d'outils d'image (évite tout chevauchement sur mobile) */
+.product-image-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+}
+
+.badge-model-tag {
+    background-color: #18191B;
+    color: #FFFFFF;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 800;
+    font-size: 0.82rem;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    border: 1px solid #333740;
+}
+
+.btn-zoom-trigger {
+    background-color: #FFFFFF;
+    color: #18191B;
+    border: 1.5px solid #18191B;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 800;
+    font-size: 0.78rem;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 0.4rem 0.85rem;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.btn-zoom-trigger:hover {
+    background-color: var(--lemark-red);
+    border-color: var(--lemark-red);
+    color: #FFFFFF;
+}
+
+/* Cadre photo mécanique */
+.product-main-display {
+    position: relative;
+    background: linear-gradient(180deg, #F8F9FA 0%, #EAEDF2 100%);
+    border: 2px solid #B8BDC6;
+    border-radius: 10px;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+}
+
+.product-main-display img {
+    max-width: 100%;
+    max-height: 360px;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.25));
+    transition: transform 0.2s ease;
+}
+
+.product-main-display:hover img {
+    transform: scale(1.02);
+}
+
+/* Miniatures de carrousel */
+.product-thumbnail-strip {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+.product-thumbnail-item {
+    width: 90px;
+    height: 70px;
+    flex-shrink: 0;
+    background-color: #FFFFFF;
+    border: 2px solid #C0C5CE;
+    border-radius: 6px;
+    padding: 3px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s ease;
+}
+
+.product-thumbnail-item.active {
+    border-color: var(--lemark-red);
+    border-width: 2.5px;
+}
+
+.product-thumbnail-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* ===================================================
+   SÉLECTEUR DE DIMENSIONS : CALIBRE UNIFORME STRICT
+   =================================================== */
+
+.dimension-selector-label {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.85rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #495057;
+    margin-bottom: 0.6rem;
+}
+
+/* Grille CSS : impose des colonnes strictement identiques */
+.dimension-selector-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+    gap: 12px;
+    width: 100%;
+}
+
+/* Pastille individuelle : gabarit et hauteur verrouillés */
+.btn-dimension-choice {
+    width: 100%;
+    min-height: 84px;
+    height: 100%;
+    background-color: #FFFFFF;
+    border: 2px solid #BDC3CC;
+    border-radius: 8px;
+    padding: 0.75rem 0.6rem;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    box-sizing: border-box;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+/* Survol mécanique */
+.btn-dimension-choice:hover {
+    transform: translateY(-3px);
+    border-color: var(--lemark-red);
+    box-shadow: 0 6px 14px rgba(217, 29, 29, 0.16);
+}
+
+.btn-dimension-choice .dimension-spec {
+    font-family: 'Trebuchet MS', 'Arial Black', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: #18191B;
+    line-height: 1.1;
+    letter-spacing: 0.3px;
+    transition: color 0.2s ease;
+}
+
+.btn-dimension-choice:hover .dimension-spec {
+    color: var(--lemark-red);
+}
+
+.btn-dimension-choice .dimension-model-name {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #6C757D;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: color 0.2s ease;
+}
+
+/* État actif / sélectionné */
+.btn-dimension-choice.active {
+    background-color: #18191B;
+    border-color: var(--lemark-red);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(217, 29, 29, 0.25);
+}
+
+.btn-dimension-choice.active .dimension-spec {
+    color: #FFFFFF;
+}
+
+.btn-dimension-choice.active .dimension-model-name {
+    color: var(--lemark-yellow);
+}
+
+.btn-dimension-choice.active:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(217, 29, 29, 0.35);
+}
+
+/* ===================================================
+   DESCRIPTION & OPTIONS
+   =================================================== */
+
+/* Bloc description longue tronquée */
+.product-desc-box {
+    background-color: #FFFFFF;
+    border: 2px solid #CED4DA;
+    border-radius: 8px;
+    padding: 1.25rem;
+}
+
+.product-desc-text {
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: #2D3138;
+    margin: 0;
+}
+
+.btn-link-expand {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 800;
+    font-size: 0.84rem;
+    letter-spacing: 0.6px;
+    color: var(--lemark-red);
+    cursor: pointer;
+    margin-top: 0.75rem;
+    display: inline-block;
+    text-transform: uppercase;
+}
+
+.btn-link-expand:hover {
+    color: var(--lemark-red-dark);
+    text-decoration: underline;
+}
+
+/* Tiroir d'options d'atelier */
+.btn-options-toggle {
+    width: 100%;
+    background-color: #FFFFFF;
+    border: 2px solid #BDC3CC;
+    border-radius: 8px;
+    padding: 0.9rem 1.2rem;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 1rem;
+    font-weight: 900;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: #18191B;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.btn-options-toggle:hover {
+    border-color: #18191B;
+}
+
+/* Cartes d'options : Highlight noir franc & élévation au survol */
+.option-card-industrial {
+    background-color: #FFFFFF;
+    border: 2px solid #BDC3CC;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.option-card-industrial:hover {
+    border-color: #18191B;
+    box-shadow: 0 6px 18px rgba(24, 25, 27, 0.18);
+    transform: translateY(-2px);
+}
+
+.option-img-box {
+    height: 145px;
+    background: #EDEFF2;
+    border-bottom: 2px solid #D5D9E0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+    cursor: pointer;
+}
+
+.option-img-box img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.2s ease;
+}
+
+.option-card-industrial:hover .option-img-box img {
+    transform: scale(1.04);
+}
+
+/* Bouton d'agrandissement conforme */
+.option-img-box .btn-zoom-trigger {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: #FFFFFF;
+    color: #18191B;
+    border: 1.5px solid #18191B;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    padding: 0.3rem 0.65rem;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    z-index: 2;
+    transition: all 0.2s ease;
+}
+
+.option-card-industrial:hover .btn-zoom-trigger {
+    background-color: var(--lemark-red);
+    border-color: var(--lemark-red);
+    color: #FFFFFF;
+}
+
+.option-body {
+    padding: 0.9rem;
+    flex-grow: 1;
+}
+
+.option-title {
+    font-size: 0.95rem;
+    font-weight: 900;
+    color: #18191B;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+.option-desc {
+    font-size: 0.85rem;
+    color: #555B66;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* ===================================================
+   APPEL À L'ACTION & LIGHTBOX
+   =================================================== */
+
+/* Bloc d'appel : prise de rendez-vous & atelier */
+.cta-phone-card {
+    background: #18191B;
+    border-left: 6px solid var(--lemark-red);
+    border-radius: 8px;
+    padding: 1.4rem;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+}
+
+.cta-phone-title {
+    font-family: 'Trebuchet MS', 'Arial Black', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #FFFFFF;
+    margin-bottom: 0.35rem;
+}
+
+.cta-phone-text {
+    font-size: 0.9rem;
+    color: #B8BDC6;
+    line-height: 1.45;
+    margin-bottom: 1rem;
+}
+
+.btn-phone-massive {
+    background: linear-gradient(90deg, #D91D1D 0%, #BF1414 100%);
+    color: #FFFFFF;
+    font-family: 'Trebuchet MS', 'Arial Black', sans-serif;
+    font-weight: 900;
+    font-size: 1.25rem;
+    letter-spacing: 0.8px;
+    padding: 0.85rem 1.25rem;
+    border-radius: 6px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.btn-phone-massive:hover {
+    background: linear-gradient(90deg, #E62222 0%, #D01818 100%);
+    color: #FFFFFF;
+    transform: translateY(-1px);
+}
+
+/* Visionneuse plein écran */
+.lightbox-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(18, 19, 23, 0.92);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.lightbox-container {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    border: 2px solid #18191B;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lightbox-img {
+    max-width: 100%;
+    max-height: 75vh;
+    object-fit: contain;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: -14px;
+    right: -14px;
+    background-color: var(--lemark-red);
+    color: #FFFFFF;
+    border: 2px solid #FFFFFF;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 900;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    padding: 0.35rem 0.85rem;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
