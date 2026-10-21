@@ -51,3 +51,12 @@ CREATE TABLE COMPATIBLE(
                            FOREIGN KEY(id_produit) REFERENCES Produit(id_produit),
                            FOREIGN KEY(id_option) REFERENCES Options_Equipement(id_option)
 );
+
+CREATE TABLE administrateur (
+                                id_admin SERIAL PRIMARY KEY,
+                                courriel VARCHAR(255) UNIQUE NOT NULL,
+                                mot_de_passe VARCHAR(255) NOT NULL,
+                                date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+

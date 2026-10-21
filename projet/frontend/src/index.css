@@ -1347,3 +1347,453 @@ header.sticky-navbar {
     cursor: pointer;
     text-transform: uppercase;
 }
+
+
+
+
+
+
+
+
+
+/* ===================================================
+   ACCÈS ADMINISTRATEUR (TERMINAL D'ATELIER)
+   =================================================== */
+
+.admin-terminal-wrapper {
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #17181C;
+    background-image:
+            repeating-linear-gradient(60deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 4px),
+            repeating-linear-gradient(-60deg, rgba(0, 0, 0, 0.45) 0px, rgba(0, 0, 0, 0.45) 2px, transparent 2px, transparent 5px),
+            linear-gradient(135deg, #141518 0%, #24272E 50%, #17181C 100%);
+    padding: 2rem;
+    margin-top: -5.5rem; /* Pour se glisser sous la navbar comme le catalogue */
+    padding-top: 7.5rem;
+}
+
+.admin-login-card {
+    background-color: #F8F9FA;
+    border: 3px solid #18191B;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 460px;
+    padding: 2.5rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.admin-login-header {
+    border-bottom: 3px solid var(--lemark-red);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+
+.admin-login-title {
+    font-family: 'Trebuchet MS', 'Arial Black', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #18191B;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.admin-input-heavy {
+    width: 100%;
+    background-color: #FFFFFF;
+    border: 2px solid #BDC3CC;
+    border-radius: 6px;
+    padding: 0.85rem 1rem;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #18191B;
+    transition: all 0.2s ease;
+}
+
+.admin-input-heavy:focus {
+    border-color: #18191B;
+    box-shadow: 4px 4px 0px rgba(24, 25, 27, 0.1);
+    outline: none;
+}
+
+.btn-admin-login {
+    width: 100%;
+    background-color: #18191B;
+    color: #FFFFFF;
+    font-family: 'Trebuchet MS', 'Arial Black', sans-serif;
+    font-weight: 900;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 1rem;
+    border: 2px solid #18191B;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-admin-login:hover {
+    background-color: var(--lemark-red);
+    border-color: var(--lemark-red);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(217, 29, 29, 0.3);
+}
+
+.admin-dashboard-wrapper {
+    min-height: 85vh;
+    background-color: #F0F2F5;
+    padding: 3rem 0;
+}
+
+
+
+/* ===================================================
+   TABLEAU DE BORD ADMINISTRATEUR (CENTRE DE COMMANDE)
+   =================================================== */
+
+.admin-dashboard-layout {
+    display: flex;
+    min-height: 100vh;
+    background-color: #E9ECEF;
+    margin-top: -5.5rem; /* Remonte sous la navbar */
+    padding-top: 5.5rem; /* Compense la navbar */
+}
+
+/* Panneau de navigation (Sidebar) */
+.admin-sidebar {
+    width: 260px;
+    background-color: #17181C;
+    border-right: 4px solid var(--lemark-red);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.admin-sidebar-header {
+    padding: 1.5rem;
+    background-color: #101114;
+    border-bottom: 2px solid #2B2D33;
+}
+
+.admin-sidebar-title {
+    font-family: 'Consolas', 'Courier New', monospace;
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.admin-nav-btn {
+    background: none;
+    border: none;
+    color: #A8ADB7;
+    text-align: left;
+    padding: 1.1rem 1.5rem;
+    font-family: 'Trebuchet MS', 'Arial Black', sans-serif;
+    font-weight: 900;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    width: 100%;
+    border-bottom: 1px solid #24262B;
+    transition: all 0.2s ease;
+}
+
+.admin-nav-btn:hover {
+    background-color: #24272D;
+    color: #FFFFFF;
+}
+
+.admin-nav-btn.active {
+    background-color: var(--lemark-red);
+    color: #FFFFFF;
+    border-bottom-color: var(--lemark-red);
+}
+
+.admin-logout-zone {
+    margin-top: auto;
+    padding: 1.5rem;
+    border-top: 2px solid #2B2D33;
+}
+
+.btn-admin-logout {
+    width: 100%;
+    background: none;
+    border: 2px solid #555B66;
+    color: #A8ADB7;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 800;
+    padding: 0.6rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+}
+
+.btn-admin-logout:hover {
+    border-color: #FFFFFF;
+    color: #FFFFFF;
+}
+
+/* Zone de travail (Contenu) */
+.admin-content-area {
+    flex-grow: 1;
+    padding: 2.5rem 3rem;
+    overflow-y: auto;
+}
+
+.admin-content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid #CED4DA;
+}
+
+.admin-content-title {
+    font-family: 'Trebuchet MS', 'Arial Black', sans-serif;
+    font-size: 2rem;
+    font-weight: 900;
+    color: #18191B;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.btn-admin-add {
+    background-color: var(--lemark-yellow);
+    color: #18191B;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 900;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    padding: 0.6rem 1.25rem;
+    border: 2px solid #18191B;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 4px 0 rgba(24, 25, 27, 1);
+    transition: all 0.1s ease;
+}
+
+.btn-admin-add:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 rgba(24, 25, 27, 1);
+}
+
+/* Tableaux de données industriels */
+.admin-table-wrapper {
+    background-color: #FFFFFF;
+    border: 2px solid #BDC3CC;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table th {
+    background-color: #18191B;
+    color: #FFFFFF;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 1rem;
+    text-align: left;
+}
+
+.admin-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #E2E6EA;
+    vertical-align: middle;
+    color: #2D3138;
+    font-weight: 600;
+}
+
+.admin-table tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-table tr:hover td {
+    background-color: #F8F9FA;
+}
+
+/* Boutons d'action mécaniques (Éditer/Supprimer) */
+.admin-action-group {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-action-sm {
+    background: none;
+    border: 2px solid #BDC3CC;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 800;
+    font-size: 0.75rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-action-edit {
+    color: #18191B;
+}
+
+.btn-action-edit:hover {
+    border-color: #18191B;
+    background-color: #18191B;
+    color: #FFFFFF;
+}
+
+.btn-action-delete {
+    color: var(--lemark-red);
+}
+
+.btn-action-delete:hover {
+    border-color: var(--lemark-red);
+    background-color: var(--lemark-red);
+    color: #FFFFFF;
+}
+
+
+
+
+
+
+
+/* ===================================================
+   FORMULAIRES D'ADMINISTRATION (STYLE ATELIER)
+   =================================================== */
+
+.admin-form-container {
+    background-color: #FFFFFF;
+    border: 2px solid #BDC3CC;
+    border-radius: 8px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.admin-form-group {
+    margin-bottom: 1.5rem;
+}
+
+.admin-form-label {
+    display: block;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.9rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #495057;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.5px;
+}
+
+.admin-input, .admin-select, .admin-textarea {
+    width: 100%;
+    background-color: #F8F9FA;
+    border: 2px solid #CED4DA;
+    border-radius: 6px;
+    padding: 0.85rem 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #18191B;
+    transition: all 0.2s ease;
+}
+
+.admin-input:focus, .admin-select:focus, .admin-textarea:focus {
+    border-color: #18191B;
+    background-color: #FFFFFF;
+    box-shadow: 4px 4px 0px rgba(24, 25, 27, 0.1);
+    outline: none;
+}
+
+.admin-textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Interrupteur Nouveauté (Toggle industriel) */
+.admin-checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #F8F9FA;
+    border: 2px solid #CED4DA;
+    padding: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.admin-checkbox-wrapper:hover {
+    border-color: #18191B;
+}
+
+.admin-checkbox {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    accent-color: var(--lemark-red);
+}
+
+/* Barre d'actions du formulaire */
+.admin-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 3px solid #E2E6EA;
+}
+
+.btn-admin-cancel {
+    background-color: transparent;
+    color: #495057;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 800;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    padding: 0.85rem 1.5rem;
+    border: 2px solid #BDC3CC;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-admin-cancel:hover {
+    background-color: #E2E6EA;
+    color: #18191B;
+    border-color: #18191B;
+}
+
+.btn-admin-save {
+    background-color: var(--lemark-red);
+    color: #FFFFFF;
+    font-family: 'Trebuchet MS', 'Arial Black', sans-serif;
+    font-weight: 900;
+    font-size: 1.05rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.85rem 2rem;
+    border: 2px solid var(--lemark-red);
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 4px 0px rgba(180, 20, 20, 1);
+    transition: all 0.1s ease;
+}
+
+.btn-admin-save:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 rgba(180, 20, 20, 1);
+}

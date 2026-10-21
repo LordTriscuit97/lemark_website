@@ -7,7 +7,6 @@ function Navbar() {
     const [sousMenuMobileOuvert, setSousMenuMobileOuvert] = useState(false);
     const [estScrolle, setEstScrolle] = useState(false);
 
-    // Détection du défilement
     useEffect(() => {
         const gererDefilement = () => {
             if (window.scrollY > 100) {
@@ -31,7 +30,9 @@ function Navbar() {
         <header className={`sticky-navbar ${estScrolle ? 'header-scrolled' : ''}`}>
             {/* ================= VERSION ORDINATEUR ================= */}
             <div className="d-none d-lg-block header-wrapper-desktop">
-                <div className="top-info-bar">
+
+                {/* BANDE NOIRE (TOP INFO BAR) - C'est ici qu'on met l'icône admin à droite */}
+                <div className="top-info-bar d-flex justify-content-between align-items-center px-4">
                     <div className="d-flex align-items-center gap-4 fw-bold">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" className="me-2" viewBox="0 0 16 16">
@@ -51,9 +52,23 @@ function Navbar() {
                             Venez voir en personne !
                         </span>
                     </div>
+
+                    {/* ICÔNE ADMIN (Cercle jaune sur ta photo) */}
+                    <Link
+                        to="/admin"
+                        className="text-secondary d-flex align-items-center"
+                        title="Accès Système"
+                        style={{ transition: 'color 0.2s' }}
+                        onMouseOver={e => e.currentTarget.classList.replace('text-secondary', 'text-white')}
+                        onMouseOut={e => e.currentTarget.classList.replace('text-white', 'text-secondary')}
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                            <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                        </svg>
+                    </Link>
                 </div>
 
-                {/* Logo centré horizontalement entre le bord gauche et la barre rouge */}
                 <div className="navbar-logo-desktop">
                     <Link to="/" onClick={fermerTout}>
                         <img
@@ -67,13 +82,11 @@ function Navbar() {
                     </Link>
                 </div>
 
-                {/* Boîte rouge avec menu déroulant */}
                 <div className="navbar-red-pill-desktop">
                     <nav className="d-flex align-items-center gap-2">
                         <Link className="nav-pill-link" to="/" onClick={fermerTout}>Accueil</Link>
                         <div className="nav-separator" />
 
-                        {/* Menu Déroulant "Nos Produits" */}
                         <div
                             className="nav-dropdown"
                             onMouseEnter={() => setDropdownDesktopOuvert(true)}
@@ -150,15 +163,25 @@ function Navbar() {
                         />
                     </Link>
 
-                    <button
-                        className="btn-hamburger"
-                        onClick={() => setMenuMobileOuvert(!menuMobileOuvert)}
-                        aria-label="Menu principal"
-                    >
-                        <span className="hamburger-line" />
-                        <span className="hamburger-line" />
-                        <span className="hamburger-line" />
-                    </button>
+                    {/* Zone de droite : Icône admin + Bouton Hamburger */}
+                    <div className="d-flex align-items-center gap-4">
+                        <Link to="/admin" className="text-secondary" onClick={fermerTout}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                            </svg>
+                        </Link>
+
+                        <button
+                            className="btn-hamburger"
+                            onClick={() => setMenuMobileOuvert(!menuMobileOuvert)}
+                            aria-label="Menu principal"
+                        >
+                            <span className="hamburger-line" />
+                            <span className="hamburger-line" />
+                            <span className="hamburger-line" />
+                        </button>
+                    </div>
                 </div>
 
                 {/* Tiroir déroulant fluide */}
@@ -166,7 +189,6 @@ function Navbar() {
                     <nav className="d-flex flex-column">
                         <Link className="mobile-nav-link" to="/" onClick={fermerTout}>Accueil</Link>
 
-                        {/* Accordéon mobile pour "Nos Produits" */}
                         <div>
                             <button
                                 type="button"
