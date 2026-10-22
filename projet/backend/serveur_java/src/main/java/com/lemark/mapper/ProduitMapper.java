@@ -13,56 +13,44 @@ import java.util.stream.Collectors;
 public class ProduitMapper {
 
     public ProduitDTO toDTO(Produit produit) {
-        if (produit == null) {
-            return null;
-        }
+        if (produit == null) return null;
 
         // 1. Catégorie
         CategorieDTO categorieDTO = null;
         if (produit.categorie != null) {
-            categorieDTO = new CategorieDTO(
-                    produit.categorie.idCategorie,
-                    produit.categorie.nomCategorie
-            );
+            categorieDTO = new CategorieDTO(produit.categorie.idCategorie, produit.categorie.nomCategorie);
         }
 
-        // 2. Modèles
+        // 2. Modèles (CORRECTION ICI : On ajoute produit.idProduit comme 5e paramètre)
         var modelesDTO = produit.modeles.stream()
-                .map(m -> new ModeleDTO(m.idModele, m.sku, m.nomModele, m.specifications))
+                .map(m -> new ModeleDTO(m.idModele, m.sku, m.nomModele, m.specifications, produit.idProduit))
                 .collect(Collectors.toList());
 
         // 3. Images
         var imagesDTO = produit.images.stream()
-                .map(i -> new ImageProduitDTO(
-                        i.idImage,
-                        i.nomFichier,
-                        i.ordreAffichage,
-                        i.modele != null ? i.modele.idModele : null
-                ))
+                .map(i -> {
+                    int idModeleLie = 0;
+
+                    // On récupère le modèle si l'image y est associée
+                    if (i.modele != null) {
+                        idModeleLie = i.modele.idModele;
+                    }
+
+                    int ordre = i.ordreAffichage != null ? i.ordreAffichage : 1;
+
+                    return new ImageProduitDTO(i.idImage, i.nomFichier, ordre, idModeleLie);
+                })
                 .collect(Collectors.toList());
 
-        // 4. Options d'équipement (NOUVEAU)
+        // 4. Options
         var optionsDTO = produit.options.stream()
-                .map(o -> new OptionEquipementDTO(
-                        o.idOption,
-                        o.nomOption,
-                        o.sku,
-                        o.descriptionOption,
-                        o.nomFichierImage
-                ))
+                .map(o -> new OptionEquipementDTO(o.idOption, o.nomOption, o.sku, o.descriptionOption, o.nomFichierImage))
                 .collect(Collectors.toList());
 
-        // 5. Assemblage
         return new ProduitDTO(
-                produit.idProduit,
-                produit.nomProduit,
-                produit.descriptionCourte,
-                produit.descriptionLongue,
+                produit.idProduit, produit.nomProduit, produit.descriptionCourte, produit.descriptionLongue,
                 produit.estNouveaute != null ? produit.estNouveaute : false,
-                categorieDTO,
-                modelesDTO,
-                imagesDTO,
-                optionsDTO // On injecte les options ici
+                categorieDTO, modelesDTO, imagesDTO, optionsDTO
         );
     }
 }

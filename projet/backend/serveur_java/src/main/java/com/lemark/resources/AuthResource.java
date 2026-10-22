@@ -63,7 +63,7 @@ public class AuthResource {
         String monHash = "$2a$10$N02blEwFtKfsKPEy6ubgvOtdMBJVKzWMujxgPZdtMtzpp4m3KXH9y";
 
         try {
-            adminMapper.creerCompte("kirouacarnaud97@gmail.com", monHash);
+            adminMapper.insererAdmin("kirouacarnaud97@gmail.com", monHash);
             return "Succès : Compte administrateur créé ! Tu peux maintenant te connecter.";
         } catch (Exception e) {
             return "Erreur (le compte existe peut-être déjà) : " + e.getMessage();

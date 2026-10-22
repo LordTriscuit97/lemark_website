@@ -4,7 +4,6 @@ import { useParams, Link } from 'react-router-dom';
 function ProduitDetail() {
     const { id } = useParams();
     const [produit, setProduit] = useState(null);
-    const [modeleSelectionne, setModeleSelectionne] = useState(null);
     const [imageIndex, setImageIndex] = useState(0);
     const [modalImage, setModalImage] = useState(null);
     const [descComplete, setDescComplete] = useState(false);
@@ -23,9 +22,6 @@ function ProduitDetail() {
             .then(data => {
                 const produitTrouve = data.find(p => p.idProduit.toString() === id);
                 setProduit(produitTrouve);
-                if (produitTrouve?.modeles && produitTrouve.modeles.length > 0) {
-                    setModeleSelectionne(produitTrouve.modeles[0]);
-                }
                 setChargement(false);
             })
             .catch(err => {
@@ -33,6 +29,17 @@ function ProduitDetail() {
                 setChargement(false);
             });
     }, [id]);
+
+    // Logique du carrousel automatique
+    useEffect(() => {
+        if (!produit || !produit.images || produit.images.length <= 1) return;
+
+        const intervalId = setInterval(() => {
+            setImageIndex((prevIndex) => (prevIndex + 1) % produit.images.length);
+        }, 4000);
+
+        return () => clearInterval(intervalId);
+    }, [produit]);
 
     if (chargement) {
         return (
@@ -59,13 +66,47 @@ function ProduitDetail() {
         );
     }
 
-    const imagesList = produit.images && produit.images.length > 0
-        ? produit.images.map(img => `/images/produits/${img.nomFichier}`)
+    const imagesTriees = produit.images && produit.images.length > 0
+        ? [...produit.images].sort((a, b) => (a.ordreAffichage || 1) - (b.ordreAffichage || 1))
+        : [];
+
+    const imagesList = imagesTriees.length > 0
+        ? imagesTriees.map(img => `/images/produits/${img.nomFichier}`)
         : ['/images/produits/defaut_produit.png'];
 
     const imageAffichee = imagesList[imageIndex] || imagesList[0];
 
-    // Utilisation exclusive de la description longue avec découpe min/max
+    // ==============================================================
+    // DIAGNOSTIC ET ASSOCIATION DU MODÈLE
+    // ==============================================================
+    const imageCouranteData = imagesTriees[imageIndex];
+    let nomModeleAffiche = "-"; // Tiret par défaut imposé
+
+    console.log("--- DIAGNOSTIC IMAGE ---");
+    console.log("1. Données brutes de l'image courante :", imageCouranteData);
+    console.log("2. Liste des modèles du produit :", produit.modeles);
+
+    if (imageCouranteData && produit.modeles) {
+        // On capture l'ID peu importe son nom de variable JSON
+        const idRecherche = imageCouranteData.idModele || imageCouranteData.modeleId || imageCouranteData.idModeleLie;
+
+        if (idRecherche) {
+            console.log("3. Recherche d'association pour l'ID :", idRecherche);
+            // == (permissif) au lieu de === (strict) pour ignorer les conflits Chiffre/Texte
+            const modeleAssocie = produit.modeles.find(m => m.idModele == idRecherche);
+
+            if (modeleAssocie) {
+                nomModeleAffiche = modeleAssocie.nomModele;
+                console.log("4. Succès : Associé au modèle :", nomModeleAffiche);
+            } else {
+                console.warn("4. Échec : Aucun modèle trouvé correspondant à l'ID :", idRecherche);
+            }
+        } else {
+            console.log("3. Aucun ID de modèle rattaché à cette image.");
+        }
+    }
+
+
     const texteDescription = produit.descriptionLongue || produit.descriptionCourte || "";
     const estTropLong = texteDescription.length > LIMITE_CARACTERES;
     const texteAffiche = descComplete || !estTropLong
@@ -75,7 +116,6 @@ function ProduitDetail() {
     return (
         <div className="detail-wrapper">
 
-            {/* Bandeau d'en-tête carbone collé à la navbar */}
             <div className="product-header-bar">
                 <div className="container">
                     <Link to="/catalogue" className="product-breadcrumb-link">
@@ -91,16 +131,13 @@ function ProduitDetail() {
             <div className="container">
                 <div className="row g-5">
 
-                    {/* ================= COLONNE GAUCHE : VISUEL & INSPECTION ================= */}
                     <div className="col-lg-6">
 
-                        {/* Barre d'outils au-dessus (aucun chevauchement sur mobile) */}
                         <div className="product-image-toolbar">
-                            {modeleSelectionne && (
-                                <div className="badge-model-tag">
-                                    Modèle : {modeleSelectionne.nomModele}
-                                </div>
-                            )}
+                            {/* La pastille est maintenant rendue inconditionnellement */}
+                            <div className="badge-model-tag">
+                                Modèle : {nomModeleAffiche}
+                            </div>
 
                             <button
                                 type="button"
@@ -114,7 +151,6 @@ function ProduitDetail() {
                             </button>
                         </div>
 
-                        {/* Boîtier d'inspection d'équipement */}
                         <div
                             className="product-main-display"
                             onClick={() => setModalImage(imageAffichee)}
@@ -129,7 +165,6 @@ function ProduitDetail() {
                             />
                         </div>
 
-                        {/* Carrousel d'angles si plusieurs photos */}
                         {imagesList.length > 1 && (
                             <div className="product-thumbnail-strip">
                                 {imagesList.map((imgSrc, idx) => (
@@ -145,10 +180,8 @@ function ProduitDetail() {
                         )}
                     </div>
 
-                    {/* ================= COLONNE DROITE : SPÉCIFICATIONS & ATELIER ================= */}
                     <div className="col-lg-6">
 
-                        {/* Sélecteur de dimensions usinées */}
                         {produit.modeles && produit.modeles.length > 0 && (
                             <div className="mb-4">
                                 <div className="dimension-selector-label">
@@ -157,13 +190,11 @@ function ProduitDetail() {
 
                                 <div className="dimension-selector-grid">
                                     {produit.modeles.map((m) => {
-                                        const isSelected = modeleSelectionne?.idModele === m.idModele;
                                         return (
-                                            <button
+                                            <div
                                                 key={m.idModele || m.sku}
-                                                type="button"
-                                                className={`btn-dimension-choice ${isSelected ? 'active' : ''}`}
-                                                onClick={() => setModeleSelectionne(m)}
+                                                className="btn-dimension-choice"
+                                                style={{ cursor: 'default' }}
                                             >
                                                 <span className="dimension-spec">
                                                     {m.specifications || m.nomModele}
@@ -171,14 +202,13 @@ function ProduitDetail() {
                                                 <span className="dimension-model-name">
                                                     Modèle {m.nomModele}
                                                 </span>
-                                            </button>
+                                            </div>
                                         );
                                     })}
                                 </div>
                             </div>
                         )}
 
-                        {/* Bloc description longue (min/max) */}
                         <div className="product-desc-box mb-4">
                             <p className="product-desc-text">
                                 {texteAffiche}
@@ -195,7 +225,6 @@ function ProduitDetail() {
                             )}
                         </div>
 
-                        {/* Options et accessoires compatibles */}
                         {produit.options && produit.options.length > 0 && (
                             <div className="mb-4">
                                 <button
@@ -221,7 +250,6 @@ function ProduitDetail() {
                                                     <div key={option.idOption} className="col-12 col-sm-6">
                                                         <div className="option-card-industrial">
 
-                                                            {/* Boîtier image avec bouton d'agrandissement conforme */}
                                                             <div
                                                                 className="option-img-box"
                                                                 onClick={() => setModalImage(optionImg)}
@@ -264,7 +292,6 @@ function ProduitDetail() {
                             </div>
                         )}
 
-                        {/* Appel à l'action : Visite d'atelier & Commandes */}
                         <div className="cta-phone-card">
                             <div className="cta-phone-title">
                                 Venir voir l'équipement ou commander
@@ -284,7 +311,6 @@ function ProduitDetail() {
                 </div>
             </div>
 
-            {/* Visionneuse plein écran */}
             {modalImage && (
                 <div className="lightbox-backdrop" onClick={() => setModalImage(null)}>
                     <div className="lightbox-container" onClick={(e) => e.stopPropagation()}>

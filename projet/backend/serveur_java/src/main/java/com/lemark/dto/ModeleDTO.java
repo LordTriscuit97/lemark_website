@@ -4,5 +4,6 @@ public record ModeleDTO (
     int idModele,
     String sku,
     String nomModele,
-    String specifications
+    String specifications,
+    int idProduit
 ){}

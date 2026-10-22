@@ -99,3 +99,17 @@ SELECT setval(pg_get_serial_sequence('categorie', 'id_categorie'), COALESCE((SEL
 SELECT setval(pg_get_serial_sequence('produit', 'id_produit'), COALESCE((SELECT MAX(id_produit) FROM produit), 1));
 SELECT setval(pg_get_serial_sequence('options_equipement', 'id_option'), COALESCE((SELECT MAX(id_option) FROM options_equipement), 1));
 SELECT setval(pg_get_serial_sequence('modele', 'id_modele'), COALESCE((SELECT MAX(id_modele) FROM modele), 1));
+
+INSERT INTO Parametres_Site (id_parametre, banniere_active, banniere_texte, telephone, courriel, adresse, copyright_texte, heures_ouverture, lien_facebook, texte_seo)
+VALUES (
+           1,
+           false,
+           'Fermeture de l''usine pour les vacances de la construction.',
+           '1-800-555-0199',
+           'info@lemark.qc.ca',
+           '123 Rue de l''Industrie, Sherbrooke, QC',
+           '© 2026 Les Entreprises Lemark. Tous droits réservés.',
+           'Lun-Ven: 8h à 17h',
+           'https://facebook.com/lemark',
+           'Les Entreprises Lemark : Équipements forestiers et agricoles robustes fabriqués au Québec.'
+       );
