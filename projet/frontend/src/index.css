@@ -1,82 +1,154 @@
 /* ===================================================
-   VARIABLES GLOBALES & POLICES INDUSTRIELLES
+   POLICES & IMPORTATION GOOGLE FONTS
    =================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;800;900&family=Teko:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Teko:wght@500;600;700&display=swap');
 
+/* ===================================================
+   VARIABLES DE COULEURS & DESIGN TOKENS
+   =================================================== */
 :root {
     --lemark-charcoal: #141518;
     --lemark-bg-offwhite: #F4F5F7;
     --lemark-white: #FFFFFF;
     --lemark-red: #D91D1D;
-    --lemark-red-dark: #BF1414;
+    --lemark-red-hover: #B51616;
     --lemark-yellow: #FFB703;
+    --lemark-yellow-hover: #E0A000;
+    --lemark-dark-hover: #27292E;
+    --lemark-border-dark: #0A0A0C;
+}
+
+/* ===================================================
+   RÈGLES DE BASE NAVIGATEUR (ARÊTES VIVES STRICTES)
+   =================================================== */
+* {
+    box-sizing: border-box;
+    border-radius: 0px !important; /* Arêtes 100% vives */
 }
 
 body {
     background-color: var(--lemark-bg-offwhite);
-    color: #27292E;
+    color: var(--lemark-charcoal);
     font-family: 'Barlow', sans-serif;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    margin: 0;
+    padding: 0;
 }
 
-/* Titres globaux - Look machinerie */
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Teko', sans-serif;
     text-transform: uppercase;
     margin-bottom: 0.5rem;
-    line-height: 1;
+    line-height: 1.0;
 }
 
 /* ===================================================
-   BOUTONS & INTERACTIONS (ZÉRO ARRONDI)
+   LES 2 SEULS MOTIFS D'ARRIÈRE-PLAN AUTORISÉS
    =================================================== */
-.btn-yellow-pill {
-    background-color: var(--lemark-yellow);
-    color: var(--lemark-charcoal);
-    font-family: 'Teko', sans-serif;
-    font-weight: 600;
-    font-size: 1.5rem;
-    letter-spacing: 1px;
-    padding: 0.5rem 2.5rem;
-    border: none;
-    border-radius: 0; /* Arêtes vives */
-    text-transform: uppercase;
-    transition: all 0.2s ease;
-    display: inline-block;
-    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.9);
+/* 1. Zone Claire : Feuille Quadrillée d'Ingénierie */
+.bg-lemark-grid {
+    background-color: var(--lemark-bg-offwhite);
+    background-image:
+            linear-gradient(to right, rgba(24, 25, 27, 0.035) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(24, 25, 27, 0.035) 1px, transparent 1px);
+    background-size: 24px 24px;
 }
 
-.btn-yellow-pill:hover, .btn-yellow-pill:focus {
-    background-color: #E6A500;
-    color: var(--lemark-charcoal);
-    transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.9);
+/* 2. Zone Sombre : Acier Brossé / Strié Diagonale */
+.bg-lemark-steel {
+    background-color: var(--lemark-charcoal);
+    background-image:
+            repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.015) 0px, rgba(255, 255, 255, 0.015) 1px, transparent 1px, transparent 6px),
+            repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.4) 0px, rgba(0, 0, 0, 0.4) 1px, transparent 1px, transparent 6px);
 }
 
-.btn-outline-light-sq {
-    background-color: transparent;
-    color: var(--lemark-white);
-    font-family: 'Teko', sans-serif;
-    font-weight: 600;
-    font-size: 1.5rem;
-    letter-spacing: 1px;
-    padding: 0.5rem 2.5rem;
-    border: 2px solid var(--lemark-white);
-    border-radius: 0;
-    text-transform: uppercase;
-    transition: all 0.2s ease;
+/* ===================================================
+   BOUTONS ET INTERRUPTEURS MÉCANIQUES (PAYSAGE PC)
+   =================================================== */
+.btn-lemark {
     display: inline-block;
+    border: 2px solid var(--lemark-border-dark) !important;
+    border-radius: 0px !important;
+    font-family: 'Teko', sans-serif !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    box-shadow: 4px 4px 0px var(--lemark-border-dark) !important;
+    transform: translate(0px, 0px);
+    transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease !important;
+    cursor: pointer;
+    user-select: none;
     text-decoration: none;
 }
 
-.btn-outline-light-sq:hover {
-    background-color: var(--lemark-white);
-    color: var(--lemark-charcoal);
+/* Enfoncement partiel au survol (2px) */
+.btn-lemark:hover {
+    transform: translate(2px, 2px) !important;
+    box-shadow: 2px 2px 0px var(--lemark-border-dark) !important;
+}
+
+/* Enfoncement complet au clic (4px) */
+.btn-lemark:active {
+    transform: translate(4px, 4px) !important;
+    box-shadow: 0px 0px 0px transparent !important;
+}
+
+/* Variantes de boutons */
+.btn-lemark-yellow {
+    background-color: var(--lemark-yellow) !important;
+    color: var(--lemark-border-dark) !important;
+}
+.btn-lemark-yellow:hover {
+    background-color: var(--lemark-yellow-hover) !important;
+}
+
+.btn-lemark-red {
+    background-color: var(--lemark-red) !important;
+    color: var(--lemark-white) !important;
+}
+.btn-lemark-red:hover {
+    background-color: var(--lemark-red-hover) !important;
+}
+
+.btn-lemark-dark {
+    background-color: var(--lemark-charcoal) !important;
+    color: var(--lemark-white) !important;
+}
+.btn-lemark-dark:hover {
+    background-color: var(--lemark-dark-hover) !important;
+}
+
+.btn-lemark-outline {
+    background-color: var(--lemark-white) !important;
+    color: var(--lemark-border-dark) !important;
+}
+.btn-lemark-outline:hover {
+    background-color: #E9ECEF !important;
 }
 
 /* ===================================================
-   NAVBAR & BANNIÈRE (PLEINE LARGEUR)
+   CARTES ET MODULES D'ÉQUIPEMENT UNIFIÉS
+   =================================================== */
+.card-lemark {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: var(--lemark-white);
+    border: 2px solid var(--lemark-border-dark) !important;
+    border-radius: 0px !important;
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.15);
+    transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+    text-decoration: none;
+    position: relative;
+}
+
+.card-lemark:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--lemark-red) !important;
+}
+
+/* ===================================================
+   HEADER & NAVBAR PC INTERACTIVE
    =================================================== */
 header.sticky-navbar {
     position: sticky;
@@ -85,28 +157,12 @@ header.sticky-navbar {
     width: 100%;
 }
 
-.banner-close-btn {
-    border: 2px solid rgba(255, 255, 255, 0.6) !important;
-    border-radius: 2px; /* Léger carré visible */
-    width: 28px;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-}
-
-.banner-close-btn:hover {
-    border-color: #FFFFFF !important;
-    background-color: rgba(255, 255, 255, 0.2);
-}
-
 .top-info-bar {
     background-color: #0A0A0C;
     height: 40px;
     display: flex;
     align-items: center;
-    justify-content: center; /* Parfaitement centré selon ton feedback */
+    justify-content: center;
     color: #A8ADB7;
     font-size: 0.85rem;
     font-weight: 600;
@@ -126,47 +182,37 @@ header.sticky-navbar {
     padding: 0.75rem 2rem;
 }
 
-/* Plaque de logo biseautée - Centrage basé sur la ligne d'assise du bas */
 .navbar-logo-desktop {
-    background-color: #FFFFFF;
-    /* On resserre l'espace à gauche et on ouvre l'espace à droite pour compenser la pente */
+    background-color: var(--lemark-white);
     padding: 0.65rem 2.6rem 0.65rem 1.25rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    /* Pente à 80% au bas pour offrir un ancrage visuel plus solide */
     clip-path: polygon(0 0, 100% 0, 80% 100%, 0 100%);
     border-left: 4px solid var(--lemark-red);
     margin-right: 1rem;
-    transition: all 0.3s ease;
     filter: drop-shadow(4px 4px 0px rgba(0, 0, 0, 0.5));
+    transition: transform 0.15s ease;
+}
+
+.navbar-logo-desktop:hover {
+    transform: scale(1.02);
 }
 
 .navbar-logo-desktop img {
     height: 42px;
     width: auto;
     display: block;
-    /* Aligne le logo parfaitement avec la masse visuelle inférieure */
     transform: translateX(-10px);
-    transition: height 0.3s ease, transform 0.3s ease;
-}
-
-/* Redimensionnement au défilement (Scroll) */
-.header-scrolled .navbar-logo-desktop {
-    padding: 0.45rem 2.2rem 0.45rem 1rem;
-}
-
-.header-scrolled .navbar-logo-desktop img {
-    height: 32px;
-    transform: translateX(-7px);
 }
 
 .nav-links-container {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
+/* Boutons / Liens de la Navbar */
 .nav-pill-link {
     color: var(--lemark-white);
     font-family: 'Teko', sans-serif;
@@ -175,30 +221,50 @@ header.sticky-navbar {
     font-size: 1.35rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    padding: 0.25rem 0.5rem;
-    border-bottom: 3px solid transparent;
-    transition: all 0.2s ease;
+    padding: 0.35rem 0.85rem;
+    border: 2px solid transparent;
+    transition: all 0.15s ease !important;
+    cursor: pointer;
+    background: transparent;
+    user-select: none;
+    display: inline-flex;
+    align-items: center;
 }
 
 .nav-pill-link:hover {
-    color: var(--lemark-yellow);
-    border-bottom-color: var(--lemark-yellow);
+    color: var(--lemark-yellow) !important;
+    border-color: var(--lemark-yellow) !important;
+    background-color: rgba(255, 183, 3, 0.08) !important;
+}
+
+.nav-pill-link:active {
+    transform: translate(2px, 2px);
+}
+
+/* Éléments du menu déroulant (Dropdown) */
+.dropdown-item-lemark {
+    display: block;
+    color: var(--lemark-charcoal);
+    text-decoration: none;
+    font-weight: 700;
+    padding: 0.65rem 0.85rem;
+    text-transform: uppercase;
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.95rem;
+    border-left: 4px solid transparent;
+    transition: all 0.15s ease !important;
+}
+
+.dropdown-item-lemark:hover {
+    background-color: var(--lemark-charcoal) !important;
+    color: var(--lemark-yellow) !important;
+    border-left-color: var(--lemark-red) !important;
+    padding-left: 1.15rem !important;
 }
 
 /* ===================================================
-   SECTION HÉRO
+   GRILLE PHOTO SECTION HERO
    =================================================== */
-.hero-fullwidth-steel {
-    background-color: var(--lemark-charcoal);
-    /* Motif industriel : Lignes diagonales subtiles */
-    background-image:
-            repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.015) 0px, rgba(255, 255, 255, 0.015) 1px, transparent 1px, transparent 6px),
-            repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.4) 0px, rgba(0, 0, 0, 0.4) 1px, transparent 1px, transparent 6px);
-    padding: 6rem 0 5rem 0;
-    position: relative;
-    border-bottom: 4px solid var(--lemark-red);
-}
-
 .hero-island-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -207,15 +273,14 @@ header.sticky-navbar {
 
 .island-photo-card {
     background-color: #1D1F24;
-    border: 2px solid #2B2D33;
-    border-radius: 0; /* Angles durs */
+    border: 2px solid #0A0A0C;
+    border-radius: 0px !important;
     height: 195px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.8); /* Ombre dure ancrée */
+    box-shadow: 6px 6px 0px #0A0A0C;
     overflow: hidden;
-    transition: all 0.2s ease;
 }
 
 .island-photo-card img {
@@ -226,109 +291,24 @@ header.sticky-navbar {
 }
 
 /* ===================================================
-   CARTES PRODUITS (ROBUSTES, SANS BANDE BLANCHE MEME)
+   ANIMATIONS INTUITIVES & CARROUSEL
    =================================================== */
-.section-categories {
-    padding: 5rem 0;
-    background-color: var(--lemark-bg-offwhite);
-    /* Motif industriel : Feuille quadrillée (Drafting grid) */
-    background-image:
-            linear-gradient(to right, rgba(24, 25, 27, 0.035) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(24, 25, 27, 0.035) 1px, transparent 1px);
-    background-size: 24px 24px;
+@keyframes progressAnimation {
+    0% { width: 0%; }
+    100% { width: 100%; }
 }
 
-.section-title-industrial {
-    font-size: 3.5rem;
-    font-weight: 700;
-    color: var(--lemark-charcoal);
+@keyframes modalZoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.85);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
-.section-title-industrial span {
-    color: var(--lemark-red);
-}
-
-.category-pill-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.category-card-brut {
-    display: flex;
-    flex-direction: column;
-    background-color: var(--lemark-white);
-    border: 2px solid #CED4DA;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    box-shadow: 4px 4px 0px rgba(24, 25, 27, 0.1);
-}
-
-.category-card-brut:hover {
-    border-color: var(--lemark-charcoal);
-    box-shadow: 6px 6px 0px rgba(217, 29, 29, 1); /* Ombre rouge Lemark */
-    transform: translate(-2px, -2px);
-}
-
-.category-card-img {
-    height: 200px;
-    background-color: #E9ECEF;
-    border-bottom: 2px solid #CED4DA;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
-}
-
-.category-card-img img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
-    transition: transform 0.2s ease;
-}
-
-.category-card-brut:hover .category-card-img img {
-    transform: scale(1.05);
-}
-
-.category-card-title-box {
-    padding: 1rem;
-    text-align: center;
-    background-color: var(--lemark-white);
-}
-
-.category-card-title {
-    font-family: 'Teko', sans-serif;
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: var(--lemark-charcoal);
-    margin: 0;
-    letter-spacing: 0.5px;
-    transition: color 0.2s ease;
-}
-
-.category-card-brut:hover .category-card-title {
-    color: var(--lemark-red);
-}
-
-/* ===================================================
-   RESPONSIVE NAVBAR MOBILE
-   =================================================== */
-.header-wrapper-mobile {
-    background-color: var(--lemark-charcoal);
-    border-bottom: 3px solid var(--lemark-red);
-}
-.btn-hamburger {
-    background: transparent;
-    border: 2px solid var(--lemark-white);
-    border-radius: 0;
-    padding: 0.5rem 0.6rem;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-.hamburger-line {
-    width: 22px; height: 3px; background-color: var(--lemark-white);
+.modal-lemark-content {
+    animation: modalZoomIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

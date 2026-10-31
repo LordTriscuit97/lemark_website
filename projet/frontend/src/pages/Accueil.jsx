@@ -19,35 +19,53 @@ function Accueil() {
 
     return (
         <div>
-            {/* ================= SECTION HÉRO ================= */}
-            <section className="hero-fullwidth-steel">
-                <div className="container">
+            {/* ================= SECTION HÉRO (Acier Brossé / Strié) ================= */}
+            <section className="bg-lemark-steel py-5 position-relative border-bottom border-danger border-4">
+                <div className="container py-4">
                     <div className="row align-items-center g-5">
 
+                        {/* Colonne de Gauche : Titre et CTA */}
                         <div className="col-lg-6 pe-lg-4">
-                            <h1 className="text-white mb-4" style={{ fontSize: '5rem', lineHeight: '0.9' }}>
+                            <h1 className="text-white mb-4" style={{ fontSize: '4.5rem', lineHeight: '1', fontFamily: "'Teko', sans-serif" }}>
                                 <span className="d-block" style={{ color: 'var(--lemark-red)' }}>LEMARK</span>
                                 DES ÉQUIPEMENTS ROBUSTES, CONÇUS POUR TRAVAILLER AUSSI FORT QUE VOUS.
                             </h1>
 
-                            <p className="fs-5 mb-5 fw-bold" style={{ color: '#B4B8C2' }}>
-                                De la foresterie aux foyers, les Entreprises Lemark fabriquent des solutions durables en acier de qualité supérieure.
+                            <p className="mb-4" style={{
+                                fontFamily: "'Barlow', sans-serif",
+                                fontSize: '1.15rem',
+                                fontWeight: '700',
+                                color: 'rgba(255, 255, 255, 0.85)',
+                                letterSpacing: '0.5px',
+                                textTransform: 'uppercase',
+                                lineHeight: '1.4'
+                            }}>
+                                DE LA FORESTERIE AUX FOYERS, LES ENTREPRISES LEMARK FABRIQUENT DES SOLUTIONS DURABLES EN ACIER DE PREMIÈRE QUALITÉ.
                             </p>
 
                             <div className="d-flex gap-3 flex-wrap">
-                                <Link to="/catalogue" className="btn-yellow-pill">
+                                <Link to="/catalogue" className="btn-lemark btn-lemark-yellow px-4 py-3 fs-4">
                                     VOIR LES ÉQUIPEMENTS
                                 </Link>
-                                <Link to="/histoire" className="btn-outline-light-sq">
-                                    NOTRE SAVOIR-FAIRE
+                                <Link to="/philosophie" className="btn-lemark btn-lemark-outline px-4 py-3 fs-4">
+                                    NOTRE PHILOSOPHIE
                                 </Link>
                             </div>
                         </div>
 
+                        {/* Colonne de Droite : Grille de Photos d'Équipements */}
                         <div className="col-lg-6">
                             <div className="hero-island-grid">
                                 {imagesHero.map((item, index) => (
-                                    <div key={index} className="island-photo-card">
+                                    <div
+                                        key={index}
+                                        className="island-photo-card"
+                                        style={{
+                                            border: '2px solid #0A0A0C',
+                                            boxShadow: '6px 6px 0px #0A0A0C',
+                                            borderRadius: '0px'
+                                        }}
+                                    >
                                         <img
                                             src={item.src}
                                             alt={`Équipement Lemark ${index + 1}`}
@@ -62,34 +80,57 @@ function Accueil() {
                 </div>
             </section>
 
-            {/* ================= SECTION PRODUITS (CARTES BRUTES) ================= */}
-            <section className="section-categories">
-                <div className="container">
+            {/* ================= SECTION PRODUITS / CATÉGORIES (Papier Millimétré) ================= */}
+            <section className="bg-lemark-grid py-5">
+                <div className="container py-3">
 
-                    <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 border-bottom border-dark pb-3">
-                        <h2 className="section-title-industrial m-0">
-                            <span style={{ color: 'var(--lemark-red)' }}>NOS</span> PRODUITS
+                    {/* En-tête de section avec bordure noire dure */}
+                    <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 border-bottom border-dark border-3 pb-3">
+                        <h2 className="m-0" style={{ fontFamily: "'Teko', sans-serif", fontSize: '3.5rem', fontWeight: '700', lineHeight: '1' }}>
+                            <span style={{ color: 'var(--lemark-red)' }}>NOS</span> CATÉGORIES
                         </h2>
 
-                        <Link to="/catalogue" className="text-dark fw-bold text-uppercase text-decoration-none d-flex align-items-center gap-2" style={{ fontFamily: "'Barlow', sans-serif", fontSize: '1.1rem' }}>
-                            Catalogue complet <span aria-hidden="true">&rarr;</span>
+                        <Link to="/catalogue" className="btn-lemark btn-lemark-dark px-4 py-2 fs-5">
+                            CATALOGUE COMPLET →
                         </Link>
                     </div>
 
-                    <div className="category-pill-grid">
+                    {/* Grille de cartes uniformisées (.card-lemark) */}
+                    <div className="row g-4">
                         {categories.map((cat) => (
-                            <Link key={cat.id} to={cat.path} className="category-card-brut">
-                                <div className="category-card-img">
-                                    <img
-                                        src={cat.img}
-                                        alt={cat.nom}
-                                        onError={(e) => { e.currentTarget.src = '/images/produits/defaut_produit.png'; }}
-                                    />
-                                </div>
-                                <div className="category-card-title-box">
-                                    <h3 className="category-card-title">{cat.nom}</h3>
-                                </div>
-                            </Link>
+                            <div key={cat.id} className="col-12 col-md-6 col-lg-4">
+                                <Link to={cat.path} className="card-lemark text-decoration-none">
+
+                                    {/* Liseré Rouge Lemark Supérieur */}
+                                    <div className="w-100" style={{ height: '4px', backgroundColor: 'var(--lemark-red)' }}></div>
+
+                                    {/* Cadre Photo Produit */}
+                                    <div
+                                        className="w-100 position-relative overflow-hidden border-bottom border-dark border-2 p-3 d-flex align-items-center justify-content-center"
+                                        style={{ height: '220px', backgroundColor: '#E9ECEF' }}
+                                    >
+                                        <img
+                                            src={cat.img}
+                                            alt={cat.nom}
+                                            className="img-fluid"
+                                            style={{ maxHeight: '100%', objectFit: 'contain', filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.2))' }}
+                                            onError={(e) => { e.currentTarget.src = '/images/produits/defaut_produit.png'; }}
+                                        />
+                                    </div>
+
+                                    {/* Titre et Action de Carte */}
+                                    <div className="p-4 d-flex flex-column flex-grow-1">
+                                        <h3 className="text-dark m-0 mb-3 text-center" style={{ fontFamily: "'Teko', sans-serif", fontSize: '2rem', lineHeight: '1.1' }}>
+                                            {cat.nom}
+                                        </h3>
+
+                                        <div className="w-100 text-center bg-dark text-white fw-bold py-2 mt-auto" style={{ fontFamily: "'Teko', sans-serif", fontSize: '1.3rem', letterSpacing: '1px' }}>
+                                            EXPLORER LA CATÉGORIE →
+                                        </div>
+                                    </div>
+
+                                </Link>
+                            </div>
                         ))}
                     </div>
 
