@@ -2,6 +2,7 @@ package com.lemark.resources;
 
 import com.lemark.mapper.CategorieSqlMapper;
 import com.lemark.modeles.Categorie;
+import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -18,6 +19,7 @@ public class AdminCategorieResource {
     CategorieSqlMapper categorieSqlMapper;
 
     @GET
+    @PermitAll
     public Response lister() {
         return Response.ok(categorieSqlMapper.getAllCategories()).build();
     }

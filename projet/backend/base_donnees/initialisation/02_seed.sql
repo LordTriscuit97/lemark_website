@@ -113,3 +113,9 @@ VALUES (
            'https://facebook.com/lemark',
            'Les Entreprises Lemark : Équipements forestiers et agricoles robustes fabriqués au Québec.'
        );
+
+SELECT setval(pg_get_serial_sequence('image_produit', 'id_image'), COALESCE((SELECT MAX(id_image) FROM image_produit), 1));
+
+-- 7. Compte Administrateur principal
+INSERT INTO administrateur (courriel, mot_de_passe)
+VALUES ('kirouacarnaud97@gmail.com', '$2a$12$IOCYzoz6ohqPhVIJWuJ6k.VJAyY488iwmNQIOuSXVczRp1/G8/T4S');

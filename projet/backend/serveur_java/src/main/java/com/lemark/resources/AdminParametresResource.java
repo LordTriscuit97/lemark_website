@@ -2,6 +2,7 @@ package com.lemark.resources;
 
 import com.lemark.mapper.ParametresSqlMapper;
 import com.lemark.modeles.ParametresSite;
+import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -18,6 +19,7 @@ public class AdminParametresResource {
     ParametresSqlMapper parametresSqlMapper;
 
     @GET
+    @PermitAll
     public Response getParametres() {
         return Response.ok(parametresSqlMapper.getParametres()).build();
     }

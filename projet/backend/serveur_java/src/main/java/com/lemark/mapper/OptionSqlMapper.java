@@ -11,8 +11,8 @@ public interface OptionSqlMapper {
             "FROM options_equipement ORDER BY id_option ASC")
     List<OptionsEquipement> getAllOptions();
 
-    @Insert("INSERT INTO options_equipement (id_option, nom_option, sku, description_option) " +
-            "VALUES (#{idOption}, #{nomOption}, #{sku}, #{descriptionOption})")
+    @Insert("INSERT INTO options_equipement (nom_option, sku, description_option) " +
+            "VALUES (#{nomOption}, #{sku}, #{descriptionOption})")
     void insererOption(OptionsEquipement option);
 
     @Update("UPDATE options_equipement SET " +

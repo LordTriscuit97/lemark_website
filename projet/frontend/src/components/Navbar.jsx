@@ -7,15 +7,28 @@ function Navbar() {
     const [sousMenuMobileOuvert, setSousMenuMobileOuvert] = useState(false);
     const [estScrolle, setEstScrolle] = useState(false);
 
-    useEffect(() => {
-        const gererDefilement = () => {
-            if (window.scrollY > 100) {
-                setEstScrolle(true);
-            } else {
-                setEstScrolle(false);
-            }
-        };
+    const [banniere, setBanniere] = useState({ active: false, texte: '' });
+    const [categories, setCategories] = useState([]);
+    const [banniereFermee, setBanniereFermee] = useState(false);
+    const [banniereEnFermeture, setBanniereEnFermeture] = useState(false);
 
+    const handleFermerBanniere = () => {
+        setBanniereEnFermeture(true);
+        setTimeout(() => setBanniereFermee(true), 300);
+    };
+
+    useEffect(() => {
+        fetch('http://localhost:8080/api/admin/parametres')
+            .then(res => res.ok ? res.json() : null)
+            .then(data => { if (data) setBanniere({ active: data.banniereActive, texte: data.banniereTexte }); })
+            .catch(() => console.log("Bannière injoignable"));
+
+        fetch('http://localhost:8080/api/admin/categories')
+            .then(res => res.ok ? res.json() : null)
+            .then(data => { if (data) setCategories(Array.isArray(data) ? data : []); })
+            .catch(() => console.log("Catégories injoignables"));
+
+        const gererDefilement = () => setEstScrolle(window.scrollY > 50);
         window.addEventListener('scroll', gererDefilement);
         return () => window.removeEventListener('scroll', gererDefilement);
     }, []);
@@ -28,155 +41,113 @@ function Navbar() {
 
     return (
         <header className={`sticky-navbar ${estScrolle ? 'header-scrolled' : ''}`}>
+
+            {/* ================= BANNIÈRE D'ALERTE ================= */}
+            {banniere.active && banniere.texte && !banniereFermee && (
+                <div
+                    className="bg-danger text-white px-3 position-relative d-flex align-items-center justify-content-center"
+                    style={{
+                        fontFamily: "'Barlow', sans-serif",
+                        fontWeight: 700,
+                        fontSize: '0.95rem',
+                        letterSpacing: '0.5px',
+                        transition: 'all 0.3s ease-in-out',
+                        maxHeight: banniereEnFermeture ? '0px' : '60px',
+                        paddingTop: banniereEnFermeture ? '0px' : '0.6rem',
+                        paddingBottom: banniereEnFermeture ? '0px' : '0.6rem',
+                        opacity: banniereEnFermeture ? 0 : 1,
+                        overflow: 'hidden'
+                    }}
+                >
+                    <span className="text-center me-4">{banniere.texte}</span>
+                    <button
+                        onClick={handleFermerBanniere}
+                        className="banner-close-btn position-absolute end-0 top-50 translate-middle-y bg-transparent text-white me-3"
+                        aria-label="Fermer la bannière"
+                    >
+                        <span style={{ fontSize: '1.4rem', lineHeight: '1', position: 'relative', top: '-1px' }}>×</span>
+                    </button>
+                </div>
+            )}
+
             {/* ================= VERSION ORDINATEUR ================= */}
             <div className="d-none d-lg-block header-wrapper-desktop">
 
-                {/* BANDE NOIRE (TOP INFO BAR) - C'est ici qu'on met l'icône admin à droite */}
-                <div className="top-info-bar d-flex justify-content-between align-items-center px-4">
-                    <div className="d-flex align-items-center gap-4 fw-bold">
-                        <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" className="me-2" viewBox="0 0 16 16">
-                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
-                            </svg>
-                            123 Rue de l'Industrie, Sherbrooke, QC
-                        </span>
-                        <span className="opacity-50">•</span>
-                        <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" className="me-2" viewBox="0 0 16 16">
-                                <path fillRule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/>
-                            </svg>
-                            1-800-555-0199
-                        </span>
-                        <span className="opacity-50">•</span>
-                        <span style={{ color: '#FFB703' }}>
-                            Venez voir en personne !
-                        </span>
-                    </div>
+                {/* Info Bar Centrée */}
+                <div className="top-info-bar position-relative">
+                    <span>1295 7e Rang de Wendover Nord, Saint-Cyrille-de-Wendover, QC</span>
+                    <span className="mx-3 opacity-50">|</span>
+                    <span>(819) 388-4921</span>
+                    <span className="mx-3 opacity-50">|</span>
+                    <span style={{ color: 'var(--lemark-yellow)' }}>Prenez rendez-vous et venez voir en personne!</span>
 
-                    {/* ICÔNE ADMIN (Cercle jaune sur ta photo) */}
-                    <Link
-                        to="/admin"
-                        className="text-secondary d-flex align-items-center"
-                        title="Accès Système"
-                        style={{ transition: 'color 0.2s' }}
-                        onMouseOver={e => e.currentTarget.classList.replace('text-secondary', 'text-white')}
-                        onMouseOut={e => e.currentTarget.classList.replace('text-white', 'text-secondary')}
-                    >
+                    {/* Accès Admin à droite */}
+                    <Link to="/admin" className="text-secondary position-absolute end-0 me-4" title="Accès Système">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                            <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
                         </svg>
                     </Link>
                 </div>
 
-                <div className="navbar-logo-desktop">
-                    <Link to="/" onClick={fermerTout}>
-                        <img
-                            src="/images/general/logo_seul.png"
-                            alt="Les Entreprises Lemark"
-                            onError={(e) => {
-                                e.currentTarget.onerror = null;
-                                e.currentTarget.src = '/images/produits/defaut_produit.png';
-                            }}
-                        />
+                {/* Navbar pleine largeur */}
+                <div className="navbar-main-content">
+                    <Link to="/" onClick={fermerTout} className="navbar-logo-desktop">
+                        <img src="/images/general/logo.png" alt="Les Entreprises Lemark" />
                     </Link>
-                </div>
 
-                <div className="navbar-red-pill-desktop">
-                    <nav className="d-flex align-items-center gap-2">
+                    <nav className="nav-links-container">
                         <Link className="nav-pill-link" to="/" onClick={fermerTout}>Accueil</Link>
-                        <div className="nav-separator" />
 
-                        <div
-                            className="nav-dropdown"
-                            onMouseEnter={() => setDropdownDesktopOuvert(true)}
-                            onMouseLeave={() => setDropdownDesktopOuvert(false)}
-                        >
-                            <button
-                                type="button"
-                                className="nav-pill-link nav-dropdown-btn"
-                                onClick={() => setDropdownDesktopOuvert(!dropdownDesktopOuvert)}
-                            >
-                                <span>Nos Produits</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" className="ms-1" viewBox="0 0 16 16" style={{ transform: dropdownDesktopOuvert ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>
-                                    <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
-                                </svg>
+                        <div className="position-relative" onMouseEnter={() => setDropdownDesktopOuvert(true)} onMouseLeave={() => setDropdownDesktopOuvert(false)}>
+                            <button type="button" className="nav-pill-link bg-transparent border-0 d-flex align-items-center" onClick={() => setDropdownDesktopOuvert(!dropdownDesktopOuvert)}>
+                                Nos Produits ▾
                             </button>
-
                             {dropdownDesktopOuvert && (
-                                <div className="nav-dropdown-menu">
-                                    <Link className="dropdown-item-custom" to="/categorie/1" onClick={fermerTout}>Surfaceuses</Link>
-                                    <Link className="dropdown-item-custom" to="/categorie/2" onClick={fermerTout}>Rouleaux & Compacteurs</Link>
-                                    <Link className="dropdown-item-custom" to="/categorie/3" onClick={fermerTout}>Débuscage & Foresterie</Link>
-                                    <Link className="dropdown-item-custom" to="/categorie/4" onClick={fermerTout}>Remorques</Link>
-                                    <Link className="dropdown-item-custom" to="/categorie/5" onClick={fermerTout}>Niveleuses & Herses</Link>
-                                    <Link className="dropdown-item-custom" to="/categorie/6" onClick={fermerTout}>Foyers Extérieurs</Link>
-                                    <div className="dropdown-divider-custom" />
-                                    <Link className="dropdown-item-custom" style={{ color: '#D91D1D' }} to="/catalogue" onClick={fermerTout}>Tout voir</Link>
+                                <div className="position-absolute bg-white border border-dark rounded-0 p-2 shadow-lg" style={{ top: '100%', left: 0, minWidth: '220px', zIndex: 1000 }}>
+                                    {categories.map(cat => (
+                                        <Link key={cat.idCategorie} className="d-block text-dark text-decoration-none fw-bold p-2 text-uppercase" style={{ fontFamily: "'Barlow', sans-serif", fontSize: '0.9rem' }} to={`/categorie/${cat.idCategorie}`} onClick={fermerTout}>
+                                            {cat.nomCategorie}
+                                        </Link>
+                                    ))}
+                                    <hr className="my-1"/>
+                                    <Link className="d-block text-danger text-decoration-none fw-bold p-2 text-uppercase" style={{ fontFamily: "'Barlow', sans-serif", fontSize: '0.9rem' }} to="/catalogue" onClick={fermerTout}>Tout voir</Link>
                                 </div>
                             )}
                         </div>
 
-                        <div className="nav-separator" />
                         <Link className="nav-pill-link" to="/nouveautes" onClick={fermerTout}>Nouveautés</Link>
-                        <div className="nav-separator" />
                         <Link className="nav-pill-link" to="/histoire" onClick={fermerTout}>Notre Histoire</Link>
-                        <div className="nav-separator" />
                         <Link className="nav-pill-link" to="/contact" onClick={fermerTout}>Nous Joindre</Link>
                     </nav>
 
-                    <div className="d-flex align-items-center gap-3">
-                        <div className="text-end text-white" style={{ lineHeight: '1.15' }}>
-                            <span className="d-block fw-bold" style={{ fontSize: '0.68rem', letterSpacing: '0.4px', opacity: 0.9 }}>
-                                FIÈREMENT CONÇU ET
-                            </span>
-                            <span className="d-block fw-bolder" style={{ fontSize: '0.8rem', letterSpacing: '0.5px' }}>
-                                FABRIQUÉ AU QUÉBEC
-                            </span>
+                    <div className="d-flex align-items-center gap-2 text-white text-end" style={{ fontFamily: "'Teko', sans-serif" }}>
+                        <div style={{ lineHeight: '1.1' }}>
+                            <span className="d-block text-white-50" style={{ fontSize: '1rem' }}>FIÈREMENT CONÇU ET</span>
+                            <span className="d-block text-white" style={{ fontSize: '1.2rem', letterSpacing: '0.5px' }}>FABRIQUÉ AU QUÉBEC</span>
                         </div>
-                        <img
-                            src="/images/general/quebec_fleur_lys.png"
-                            alt="Fleur de lys"
-                            style={{ maxHeight: '34px', width: 'auto' }}
-                            onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                        />
+                        <img src="/images/general/quebec_fleur_lys.png" alt="Fleur de lys" style={{ maxHeight: '30px' }} />
                     </div>
                 </div>
             </div>
 
             {/* ================= VERSION MOBILE ================= */}
             <div className="d-lg-none header-wrapper-mobile">
-                <div className="mobile-info-strip text-center fw-bold">
-                    <div>1-800-555-0199 • <span style={{ color: '#FFB703' }}>Venez voir en personne !</span></div>
+                <div className="bg-dark text-white-50 text-center py-1 fw-bold" style={{ fontSize: '0.75rem' }}>
+                    1-800-555-0199 • <span className="text-warning">Prenez rendez-vous et venez voir en personne!</span>
                 </div>
 
                 <div className="container px-3 py-2 d-flex align-items-center justify-content-between">
                     <Link to="/" onClick={fermerTout}>
-                        <img
-                            src="/images/general/logo_seul.png"
-                            alt="Lemark"
-                            style={{ maxHeight: '55px', width: 'auto' }}
-                            onError={(e) => {
-                                e.currentTarget.onerror = null;
-                                e.currentTarget.src = '/images/produits/defaut_produit.png';
-                            }}
-                        />
+                        <img src="/images/general/logo.png" alt="Lemark" style={{ maxHeight: '40px' }} />
                     </Link>
 
-                    {/* Zone de droite : Icône admin + Bouton Hamburger */}
-                    <div className="d-flex align-items-center gap-4">
+                    <div className="d-flex align-items-center gap-3">
                         <Link to="/admin" className="text-secondary" onClick={fermerTout}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                                <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
                             </svg>
                         </Link>
-
-                        <button
-                            className="btn-hamburger"
-                            onClick={() => setMenuMobileOuvert(!menuMobileOuvert)}
-                            aria-label="Menu principal"
-                        >
+                        <button className="btn-hamburger" onClick={() => setMenuMobileOuvert(!menuMobileOuvert)}>
                             <span className="hamburger-line" />
                             <span className="hamburger-line" />
                             <span className="hamburger-line" />
@@ -184,49 +155,27 @@ function Navbar() {
                     </div>
                 </div>
 
-                {/* Tiroir déroulant fluide */}
-                <div className={`mobile-menu-drawer ${menuMobileOuvert ? 'open' : ''}`}>
-                    <nav className="d-flex flex-column">
-                        <Link className="mobile-nav-link" to="/" onClick={fermerTout}>Accueil</Link>
-
-                        <div>
-                            <button
-                                type="button"
-                                className="mobile-nav-link w-100 text-start d-flex justify-content-between align-items-center bg-transparent border-0"
-                                onClick={() => setSousMenuMobileOuvert(!sousMenuMobileOuvert)}
-                            >
-                                <span>Nos Produits</span>
-                                <span style={{ fontSize: '1.3rem', lineHeight: '1' }}>{sousMenuMobileOuvert ? '-' : '+'}</span>
+                {menuMobileOuvert && (
+                    <div className="bg-dark p-3 border-top border-danger border-2">
+                        <Link className="d-block text-white text-decoration-none fw-bold py-2 border-bottom border-secondary" to="/" onClick={fermerTout}>ACCUEIL</Link>
+                        <div className="py-2 border-bottom border-secondary">
+                            <button className="w-100 text-start bg-transparent border-0 text-white fw-bold d-flex justify-content-between p-0" onClick={() => setSousMenuMobileOuvert(!sousMenuMobileOuvert)}>
+                                NOS PRODUITS <span>{sousMenuMobileOuvert ? '-' : '+'}</span>
                             </button>
-
                             {sousMenuMobileOuvert && (
-                                <div className="mobile-submenu">
-                                    <Link className="mobile-submenu-link" to="/categorie/1" onClick={fermerTout}>Surfaceuses</Link>
-                                    <Link className="mobile-submenu-link" to="/categorie/2" onClick={fermerTout}>Rouleaux & Compacteurs</Link>
-                                    <Link className="mobile-submenu-link" to="/categorie/3" onClick={fermerTout}>Débuscage & Foresterie</Link>
-                                    <Link className="mobile-submenu-link" to="/categorie/4" onClick={fermerTout}>Remorques</Link>
-                                    <Link className="mobile-submenu-link" to="/categorie/5" onClick={fermerTout}>Niveleuses & Herses</Link>
-                                    <Link className="mobile-submenu-link" to="/categorie/6" onClick={fermerTout}>Foyers Extérieurs</Link>
-                                    <Link className="mobile-submenu-link fw-bold" style={{ color: '#FFB703' }} to="/catalogue" onClick={fermerTout}>Tout voir</Link>
+                                <div className="ms-3 mt-2 border-start border-warning border-2 ps-3">
+                                    {categories.map(cat => (
+                                        <Link key={cat.idCategorie} className="d-block text-white-50 text-decoration-none py-1" to={`/categorie/${cat.idCategorie}`} onClick={fermerTout}>{cat.nomCategorie}</Link>
+                                    ))}
+                                    <Link className="d-block text-warning text-decoration-none py-1 fw-bold" to="/catalogue" onClick={fermerTout}>TOUT VOIR</Link>
                                 </div>
                             )}
                         </div>
-
-                        <Link className="mobile-nav-link" to="/nouveautes" onClick={fermerTout}>Nouveautés</Link>
-                        <Link className="mobile-nav-link" to="/histoire" onClick={fermerTout}>Notre Histoire</Link>
-                        <Link className="mobile-nav-link" to="/contact" onClick={fermerTout}>Nous Joindre</Link>
-                    </nav>
-
-                    <div className="p-3 d-flex align-items-center justify-content-center gap-3 text-white">
-                        <img
-                            src="/images/general/quebec_fleur_lys.png"
-                            alt="Fleur de lys"
-                            style={{ maxHeight: '25px', width: 'auto' }}
-                            onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                        />
-                        <span className="fw-bold small">Fièrement conçu et fabriqué au Québec</span>
+                        <Link className="d-block text-white text-decoration-none fw-bold py-2 border-bottom border-secondary" to="/nouveautes" onClick={fermerTout}>NOUVEAUTÉS</Link>
+                        <Link className="d-block text-white text-decoration-none fw-bold py-2 border-bottom border-secondary" to="/histoire" onClick={fermerTout}>NOTRE HISTOIRE</Link>
+                        <Link className="d-block text-white text-decoration-none fw-bold py-2" to="/contact" onClick={fermerTout}>NOUS JOINDRE</Link>
                     </div>
-                </div>
+                )}
             </div>
         </header>
     );

@@ -6,9 +6,8 @@ import org.apache.ibatis.annotations.*;
 @Mapper
 public interface ProduitSqlMapper {
 
-    // 1. AJOUT : On force l'insertion du id_produit fourni manuellement
-    @Insert("INSERT INTO produit (id_produit, nom_produit, description_courte, description_longue, est_nouveaute, id_categorie) " +
-            "VALUES (#{idProduit}, #{nomProduit}, #{descriptionCourte}, #{descriptionLongue}, #{estNouveaute}, #{categorie.idCategorie})")
+    @Insert("INSERT INTO produit (nom_produit, description_courte, description_longue, est_nouveaute, id_categorie) " +
+            "VALUES (#{nomProduit}, #{descriptionCourte}, #{descriptionLongue}, #{estNouveaute}, #{categorie.idCategorie})")
     void insererProduit(Produit produit);
 
     // 2. MODIFICATION : On change l'ID en se basant sur l'ancien ID

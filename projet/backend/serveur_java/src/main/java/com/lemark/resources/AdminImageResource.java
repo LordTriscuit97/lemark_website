@@ -24,7 +24,6 @@ public class AdminImageResource {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public Response uploaderImage(
-            @RestForm("idImage") Integer idImage,
             @RestForm("idModele") Integer idModele,
             @RestForm("ordreAffichage") Integer ordreAffichage,
             @RestForm("idProduit") Integer idProduit,
@@ -47,7 +46,7 @@ public class AdminImageResource {
 
             Files.copy(fichier.uploadedFile(), cheminFinal, StandardCopyOption.REPLACE_EXISTING);
 
-            imageSqlMapper.insererImage(idImage, idModele, nomFichier, ordreAffichage, idProduit);
+            imageSqlMapper.insererImage(idModele, nomFichier, ordreAffichage, idProduit);
 
             return Response.ok("{\"message\":\"Image téléversée avec succès\"}").build();
 
@@ -64,8 +63,6 @@ public class AdminImageResource {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public Response modifierImage(
-            @PathParam("id") Integer ancienId,
-            @RestForm("idImage") Integer nouvelId,
             @RestForm("idModele") Integer idModele,
             @RestForm("ordreAffichage") Integer ordreAffichage,
             @RestForm("nomFichier") String nomFichier,
@@ -83,7 +80,7 @@ public class AdminImageResource {
                 Files.copy(fichier.uploadedFile(), cheminFinal, StandardCopyOption.REPLACE_EXISTING);
             }
 
-            imageSqlMapper.modifierImage(ancienId, nouvelId, idModele, nomFichierFinal, ordreAffichage);
+            imageSqlMapper.modifierImage(idModele, nomFichierFinal, ordreAffichage);
             return Response.ok("{\"message\":\"Image modifiée avec succès\"}").build();
 
         } catch (Exception e) {

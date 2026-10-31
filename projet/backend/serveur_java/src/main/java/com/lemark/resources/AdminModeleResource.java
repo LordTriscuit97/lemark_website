@@ -21,7 +21,7 @@ public class AdminModeleResource {
 
     @POST
     public Response creerModele(ModeleDTO req) {
-        modeleSqlMapper.insererModele(req.idModele(), req.sku(), req.nomModele(), req.specifications(), req.idProduit());
+        modeleSqlMapper.insererModele(req.sku(), req.nomModele(), req.specifications(), req.idProduit());
         return Response.ok().build();
     }
 

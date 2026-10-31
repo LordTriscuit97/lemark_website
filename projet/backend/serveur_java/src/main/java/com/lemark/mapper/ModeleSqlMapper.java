@@ -5,9 +5,9 @@ import org.apache.ibatis.annotations.*;
 @Mapper
 public interface ModeleSqlMapper {
 
-    @Insert("INSERT INTO Modele (id_modele, sku, nom_modele, specifications, id_produit) " +
-            "VALUES (#{idModele}, #{sku}, #{nomModele}, #{specifications}, #{idProduit})")
-    void insererModele(@Param("idModele") Integer idModele, @Param("sku") String sku,
+    @Insert("INSERT INTO Modele (sku, nom_modele, specifications, id_produit) " +
+            "VALUES (#{sku}, #{nomModele}, #{specifications}, #{idProduit})")
+    void insererModele(@Param("sku") String sku,
                        @Param("nomModele") String nomModele, @Param("specifications") String specifications,
                        @Param("idProduit") Integer idProduit);
 

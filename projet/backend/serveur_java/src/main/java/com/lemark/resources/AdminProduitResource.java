@@ -21,7 +21,6 @@ public class AdminProduitResource {
 
     @POST
     public Response creerProduit(Produit produit) {
-        // Le front-end envoie l'ID manuellement, on l'insère tel quel.
         produitSqlMapper.insererProduit(produit);
         return Response.status(Response.Status.CREATED).entity(produit).build();
     }

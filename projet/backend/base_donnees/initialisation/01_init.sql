@@ -1,14 +1,14 @@
 CREATE TABLE Categorie(
-                          id_categorie INTEGER,
+                          id_categorie SERIAL,
                           nom_categorie VARCHAR(50),
                           PRIMARY KEY(id_categorie)
 );
 
 CREATE TABLE Produit(
-                        id_produit INTEGER,
+                        id_produit SERIAL,
                         nom_produit VARCHAR(50),
-                        description_courte VARCHAR(255), -- Augmenté pour éviter les coupures
-                        description_longue TEXT,         -- Modifié en TEXT pour les longs paragraphes
+                        description_courte VARCHAR(255),
+                        description_longue TEXT,
                         est_nouveaute BOOLEAN,
                         id_categorie INTEGER NOT NULL,
                         PRIMARY KEY(id_produit),
@@ -16,7 +16,7 @@ CREATE TABLE Produit(
 );
 
 CREATE TABLE Image_Produit(
-                              id_image INTEGER,
+                              id_image SERIAL,
                               id_modele INTEGER,
                               nom_fichier VARCHAR(255),
                               ordre_affichage INTEGER,
@@ -26,7 +26,7 @@ CREATE TABLE Image_Produit(
 );
 
 CREATE TABLE Modele(
-                       id_modele INTEGER,
+                       id_modele SERIAL,
                        sku VARCHAR(50),
                        nom_modele VARCHAR(50),
                        specifications VARCHAR(255),
@@ -36,7 +36,7 @@ CREATE TABLE Modele(
 );
 
 CREATE TABLE Options_Equipement(
-                                   id_option INTEGER,
+                                   id_option SERIAL,
                                    nom_option VARCHAR(50),
                                    sku VARCHAR(50),
                                    description_option VARCHAR(255),

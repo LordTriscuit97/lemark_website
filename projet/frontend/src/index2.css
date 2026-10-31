@@ -1,0 +1,1863 @@
+/* ===================================================
+   VARIABLES GLOBALES ET STYLES DE BASE
+   =================================================== */
+
+:root {
+    --lemark-charcoal: #18191B;
+    --lemark-bg-offwhite: #F4F5F7;
+    --lemark-white: #FFFFFF;
+    --lemark-red: #D91D1D;
+    --lemark-red-dark: #BF1414;
+    --lemark-yellow: #FFB703;
+}
+
+body {
+    background-color: var(--lemark-bg-offwhite);
+    color: #27292E;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+/* Bouton Jaune Industriel */
+.btn-yellow-pill {
+    background-color: var(--lemark-yellow);
+    color: #18191B;
+    font-weight: 800;
+    padding: 1rem 2.5rem;
+    border: none;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 1.1rem;
+    display: inline-block;
+}
+
+.btn-yellow-pill:hover,
+.btn-yellow-pill:focus {
+    background-color: #E6A500;
+    color: #18191B;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* ===================================================
+   NAVBAR STICKY & DÉFILEMENT
+   =================================================== */
+
+header.sticky-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+}
+
+.header-wrapper-desktop {
+    position: relative;
+    width: 100%;
+    height: 90px;
+    background: linear-gradient(180deg, #18191B 0%, #27292E 100%);
+    margin-bottom: 5.5rem;
+}
+
+.top-info-bar {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    font-size: 0.85rem;
+}
+
+/* Boîte rouge */
+.navbar-red-pill-desktop {
+    position: absolute;
+    top: 44px;
+    right: 0;
+    left: 275px;
+    height: 60px;
+    background: linear-gradient(90deg, #D91D1D 0%, #BF1414 100%);
+    border-radius: 20px 0 0 20px;
+    box-shadow: -4px 6px 15px rgba(0, 0, 0, 0.22);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem 0 2rem;
+    z-index: 10;
+    overflow: visible;
+}
+
+/* Logo desktop & recentrage scroll */
+.navbar-logo-desktop {
+    position: absolute;
+    left: 0;
+    width: 275px;
+    top: 74px;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 25;
+    transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar-logo-desktop img {
+    height: 140px;
+    width: auto;
+    display: block;
+    filter: drop-shadow(0 5px 12px rgba(0, 0, 0, 0.28));
+    transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s ease;
+}
+
+.header-scrolled .navbar-logo-desktop {
+    top: 45px !important;
+}
+
+.header-scrolled .navbar-logo-desktop img {
+    height: 68px !important;
+    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.35));
+}
+
+.nav-pill-link {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 1.05rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.4rem 0.75rem;
+    border-radius: 8px;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.nav-pill-link:hover {
+    background-color: rgba(0, 0, 0, 0.18);
+    color: var(--lemark-yellow);
+    transform: translateY(-1px);
+}
+
+.nav-separator {
+    width: 2px;
+    height: 20px;
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Dropdown */
+.nav-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.nav-dropdown-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.nav-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #FFFFFF;
+    min-width: 250px;
+    border-radius: 12px;
+    padding: 0.5rem 0;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    z-index: 1000;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.dropdown-item-custom {
+    display: block;
+    padding: 0.65rem 1.25rem;
+    color: #27292E;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.dropdown-item-custom:hover {
+    background-color: #F4F5F7;
+    color: var(--lemark-red);
+}
+
+.dropdown-divider-custom {
+    height: 1px;
+    background-color: #E5E7EB;
+    margin: 0.4rem 0;
+}
+
+/* ===================================================
+   NAVBAR MOBILE
+   =================================================== */
+
+.header-wrapper-mobile {
+    background: linear-gradient(180deg, #18191B 0%, #27292E 100%);
+    border-bottom: 3px solid var(--lemark-red);
+    margin-bottom: 2rem;
+}
+
+.mobile-info-strip {
+    background-color: rgba(0, 0, 0, 0.25);
+    color: #DDD;
+    font-size: 0.75rem;
+    padding: 0.45rem 0.75rem;
+}
+
+.btn-hamburger {
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.btn-hamburger:focus,
+.btn-hamburger:hover {
+    border-color: var(--lemark-yellow);
+}
+
+.hamburger-line {
+    width: 24px;
+    height: 3px;
+    background-color: #FFFFFF;
+    border-radius: 2px;
+}
+
+.mobile-menu-drawer {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    background: linear-gradient(180deg, #D91D1D 0%, #BF1414 100%);
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.25);
+}
+
+.mobile-menu-drawer.open {
+    max-height: 850px;
+    opacity: 1;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    overflow-y: auto;
+}
+
+.mobile-nav-link {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 1.15rem;
+    text-transform: uppercase;
+    display: block;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link:active {
+    background-color: rgba(0, 0, 0, 0.15);
+    color: var(--lemark-yellow);
+}
+
+.mobile-submenu {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-left: 4px solid var(--lemark-yellow);
+}
+
+.mobile-submenu-link {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    display: block;
+    padding: 0.75rem 1.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.mobile-submenu-link:hover,
+.mobile-submenu-link:active {
+    color: var(--lemark-yellow);
+}
+
+/* ===================================================
+   SECTION HÉRO : ACIER PUR
+   =================================================== */
+
+.hero-fullwidth-steel {
+    width: 100%;
+    margin-top: -5.5rem;
+    padding-top: 7rem;
+    padding-bottom: 5.5rem;
+    position: relative;
+    border-radius: 0 !important;
+    background-color: #17181C;
+    background-image:
+            repeating-linear-gradient(60deg, rgba(255, 255, 255, 0.035) 0px, rgba(255, 255, 255, 0.035) 1px, transparent 1px, transparent 4px),
+            repeating-linear-gradient(-60deg, rgba(0, 0, 0, 0.5) 0px, rgba(0, 0, 0, 0.5) 2px, transparent 2px, transparent 5px),
+            linear-gradient(135deg, #121316 0%, #25282F 35%, #18191E 65%, #2D3139 88%, #141518 100%);
+    box-shadow: inset 0 6px 20px rgba(0, 0, 0, 0.7), inset 0 -6px 20px rgba(0, 0, 0, 0.7);
+    border-bottom: 4px solid var(--lemark-red);
+    overflow: hidden;
+}
+
+.hero-island-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    position: relative;
+    padding: 0.5rem;
+}
+
+.island-photo-card {
+    background-color: #1D1F24;
+    border-radius: 16px;
+    padding: 0;
+    height: 195px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    overflow: hidden;
+}
+
+.island-photo-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.island-photo-card:hover {
+    transform: scale(1.05) translateY(-4px) !important;
+    border-color: var(--lemark-red);
+    box-shadow: 0 14px 30px rgba(217, 29, 29, 0.38);
+    z-index: 10;
+}
+
+.island-photo-card:hover img {
+    transform: scale(1.06);
+}
+
+.float-island-1 { animation: floatingIslandA 6s ease-in-out infinite; }
+.float-island-2 { animation: floatingIslandB 7s ease-in-out infinite 0.6s; }
+.float-island-3 { animation: floatingIslandB 6.5s ease-in-out infinite 1.2s; }
+.float-island-4 { animation: floatingIslandA 7.5s ease-in-out infinite 1.8s; }
+
+@keyframes floatingIslandA {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-7px) rotate(0.8deg); }
+}
+
+@keyframes floatingIslandB {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(7px) rotate(-0.8deg); }
+}
+
+/* ===================================================
+   SECTION PRODUITS : TÔLE LARMÉE INDUSTRIELLE (DIAMOND PLATE)
+   =================================================== */
+
+.section-categories {
+    /* Dégradé acier de base */
+    background-color: #D6DAE0;
+
+    /* Motif tôle larmée (embossage par contraste ombre/lumière en pur SVG) */
+    background-image:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cg fill='none' stroke-linecap='round'%3E%3C!-- Relief sombre (ombres) --%3E%3Cpath d='M10,4 L14,14 L10,24 M32,26 L36,36 L32,46 M26,10 L36,14 L46,10 M4,32 L14,36 L24,32' stroke='%2318191B' stroke-opacity='0.12' stroke-width='1.5'/%3E%3C!-- Relief clair (reflet métallique) --%3E%3Cpath d='M10,4 L6,14 L10,24 M32,26 L28,36 L32,46 M26,10 L36,6 L46,10 M4,32 L14,28 L24,32' stroke='%23FFFFFF' stroke-opacity='0.55' stroke-width='1.5'/%3E%3C!-- Arête centrale --%3E%3Cpath d='M10,4 L10,24 M32,26 L32,46 M26,10 L46,10 M4,32 L24,32' stroke='%23FFFFFF' stroke-opacity='0.35' stroke-width='1'/%3E%3C/g%3E%3C/svg%3E"),
+            linear-gradient(180deg, #CFD4DB 0%, #DFE3E8 100%);
+    background-size: 44px 44px, 100% 100%;
+
+    padding-top: 4.5rem;
+    padding-bottom: 5.5rem;
+    position: relative;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* En-tête industriel avec marqueur rouge */
+.section-header-industrial {
+    border-left: 5px solid var(--lemark-red);
+    padding-left: 1.25rem;
+}
+
+.section-title-industrial {
+    font-size: clamp(2rem, 4vw, 2.6rem);
+    font-weight: 950;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: #18191B;
+    line-height: 1;
+    margin: 0;
+}
+
+.section-title-industrial span {
+    color: var(--lemark-red);
+}
+
+/* Bouton catalogue technique */
+.btn-catalogue-link {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    color: #18191B;
+    text-decoration: none;
+    text-transform: uppercase;
+    border: 1.5px solid #A8ADB7;
+    padding: 0.55rem 1.15rem;
+    border-radius: 6px;
+    background-color: #FFFFFF;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+}
+
+.btn-catalogue-link:hover {
+    background-color: var(--lemark-red);
+    border-color: var(--lemark-red);
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(217, 29, 29, 0.25);
+    transform: translateX(3px);
+}
+
+/* ===================================================
+   PILULES PRODUITS : PLAQUE RIVETÉE & HOT WELD
+   =================================================== */
+
+.category-pill-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.4rem;
+}
+
+.category-pill-blend {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: #FFFFFF;
+    border: 2px solid #C4C8D0;
+    border-radius: 12px;
+    padding: 0.75rem 1.4rem 0.75rem 0.9rem;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    min-height: 96px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+/* Bande de sécurité jaune/noir */
+.category-pill-blend::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 6px;
+    background: repeating-linear-gradient(
+            -45deg,
+            #FFB703,
+            #FFB703 6px,
+            #18191B 6px,
+            #18191B 12px
+    );
+    transition: width 0.2s ease;
+}
+
+/* 4 Rivets d'angle */
+.rivet {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #F0F2F5, #8A92A0 70%, #2A2F3A);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 1px 2px rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+    z-index: 5;
+}
+
+.rivet-tl { top: 6px; left: 12px; }
+.rivet-tr { top: 6px; right: 8px; }
+.rivet-bl { bottom: 6px; left: 12px; }
+.rivet-br { bottom: 6px; right: 8px; }
+
+/* Effet soudure incandescente */
+.category-pill-blend:hover {
+    transform: translateY(-4px);
+    border-color: var(--lemark-red);
+    box-shadow:
+            0 8px 24px rgba(217, 29, 29, 0.35),
+            0 0 18px rgba(255, 183, 3, 0.3),
+            inset 0 0 8px rgba(217, 29, 29, 0.12);
+}
+
+.category-pill-blend:hover::before {
+    width: 9px;
+}
+
+.category-pill-blend-thumb {
+    width: 120px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: linear-gradient(180deg, #EDEFF3 0%, #DFE3E8 100%);
+    border: 1px solid #D0D4DC;
+    border-radius: 8px;
+    padding: 4px;
+    margin-left: 6px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.category-pill-blend-thumb img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.25));
+    transition: transform 0.3s ease;
+}
+
+.category-pill-blend:hover .category-pill-blend-thumb img {
+    transform: scale(1.08);
+}
+
+.category-pill-blend-divider {
+    width: 2px;
+    height: 52px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, #B8BDC7 50%, rgba(0,0,0,0.05) 100%);
+    margin: 0 1.1rem 0 0.85rem;
+    flex-shrink: 0;
+    transition: background 0.25s ease;
+}
+
+.category-pill-blend:hover .category-pill-blend-divider {
+    background: var(--lemark-red);
+}
+
+.category-pill-blend-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.category-pill-blend-title {
+    color: #18191B;
+    font-weight: 900;
+    font-size: 1.15rem;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    line-height: 1.15;
+    margin-top: 2px;
+    transition: color 0.25s ease;
+}
+
+.category-pill-blend:hover .category-pill-blend-title {
+    color: var(--lemark-red);
+}
+
+/* ===================================================
+   RESPONSIVE
+   =================================================== */
+
+@media (max-width: 991px) {
+    .hero-fullwidth-steel {
+        margin-top: -2rem;
+        padding-top: 3.5rem;
+        padding-bottom: 3.5rem;
+    }
+    .island-photo-card {
+        height: 135px;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-categories {
+        padding-top: 3rem;
+        padding-bottom: 3.5rem;
+    }
+
+    .category-pill-blend {
+        min-height: 82px;
+        padding: 0.6rem 1rem 0.6rem 0.6rem;
+    }
+
+    .category-pill-blend-thumb {
+        width: 95px;
+        height: 60px;
+    }
+
+    .category-pill-blend-divider {
+        height: 42px;
+        margin: 0 0.75rem;
+    }
+
+    .category-pill-blend-title {
+        font-size: 1rem;
+    }
+}
+
+
+/* ===================================================
+   PAGE CATALOGUE : FICHES D'ATELIER & MICRO-GRILLE
+   =================================================== */
+
+.catalog-wrapper {
+    background-color: var(--lemark-bg-offwhite);
+    /* Micro-trame millimétrée d'ingénierie (drafting grid) */
+    background-image:
+            linear-gradient(to right, rgba(24, 25, 27, 0.035) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(24, 25, 27, 0.035) 1px, transparent 1px);
+    background-size: 24px 24px;
+    min-height: 85vh;
+    padding-bottom: 5.5rem;
+}
+
+/* Bandeau d'en-tête technique collé sous la navbar */
+.catalog-header-bar {
+    width: 100%;
+    margin-top: -5.5rem;
+    padding-top: 7rem;
+    padding-bottom: 3.5rem;
+    background-color: #17181C;
+    background-image:
+            repeating-linear-gradient(60deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 4px),
+            repeating-linear-gradient(-60deg, rgba(0, 0, 0, 0.45) 0px, rgba(0, 0, 0, 0.45) 2px, transparent 2px, transparent 5px),
+            linear-gradient(135deg, #141518 0%, #24272E 50%, #17181C 100%);
+    border-bottom: 4px solid var(--lemark-red);
+    margin-bottom: 3.5rem;
+    box-shadow: inset 0 -10px 20px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 991px) {
+    .catalog-header-bar {
+        margin-top: -2rem;
+        padding-top: 3.5rem;
+        padding-bottom: 2.5rem;
+    }
+}
+
+.catalog-header-title {
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 950;
+    color: #FFFFFF;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin: 0;
+}
+
+.catalog-header-subtitle {
+    font-size: 1.05rem;
+    color: #B4B8C2;
+    margin-top: 0.75rem;
+    max-width: 650px;
+    line-height: 1.5;
+}
+
+/* Fiche Produit Verticale */
+.catalog-card-industrial {
+    position: relative;
+    background-color: #FFFFFF;
+    border: 2px solid #CED4DA;
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Liseré supérieur rouge d'atelier */
+.catalog-card-industrial::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--lemark-red);
+    z-index: 3;
+}
+
+.catalog-card-industrial:hover {
+    transform: translateY(-5px);
+    border-color: var(--lemark-red);
+    box-shadow: 0 14px 30px rgba(217, 29, 29, 0.18);
+}
+
+/* Cadre photo mécanique (plaque d'exposition) */
+.catalog-img-frame {
+    height: 240px;
+    background: linear-gradient(180deg, #F0F2F5 0%, #E2E6EA 100%);
+    border-bottom: 2px solid #DCE1E7;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.catalog-img-frame img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.22));
+    transition: transform 0.3s ease;
+}
+
+.catalog-card-industrial:hover .catalog-img-frame img {
+    transform: scale(1.06);
+}
+
+/* Badges techniques */
+.badge-tech {
+    position: absolute;
+    top: 14px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.74rem;
+    font-weight: 900;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 0.35rem 0.7rem;
+    border-radius: 6px;
+    z-index: 2;
+}
+
+/* Pastille Nouveauté Rouge Lemark */
+.badge-tech-new {
+    right: 12px;
+    background-color: var(--lemark-red);
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 3px 8px rgba(217, 29, 29, 0.4);
+}
+
+/* Pastille Options : Jaune Industriel ultra-contrasté */
+.badge-tech-options {
+    left: 12px;
+    background-color: var(--lemark-yellow);
+    color: #18191B;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+}
+
+/* Corps descriptif */
+.catalog-card-body {
+    padding: 1.6rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.catalog-card-category {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: var(--lemark-red);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+    display: block;
+}
+
+.catalog-card-title {
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: #18191B;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    line-height: 1.25;
+    margin-bottom: 0.75rem;
+}
+
+.catalog-card-desc {
+    color: #555B66;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 1.75rem;
+    flex-grow: 1;
+}
+
+/* Bouton d'action sobre en acier usiné Charcoal */
+.btn-catalog-action {
+    width: 100%;
+    background-color: #18191B;
+    color: #FFFFFF;
+    font-weight: 800;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 0.85rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #2B2D33;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.25s ease;
+}
+
+.catalog-card-industrial:hover .btn-catalog-action {
+    background-color: var(--lemark-red);
+    border-color: var(--lemark-red);
+    color: #FFFFFF;
+    box-shadow: 0 6px 16px rgba(217, 29, 29, 0.35);
+    transform: translateY(-1px);
+}
+
+
+
+
+
+/* ===================================================
+   FICHE PRODUIT DÉTAILLÉE : USINAGE & ACIER CARBONE
+   =================================================== */
+
+.detail-wrapper {
+    background-color: var(--lemark-bg-offwhite);
+    background-image:
+            linear-gradient(to right, rgba(24, 25, 27, 0.035) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(24, 25, 27, 0.035) 1px, transparent 1px);
+    background-size: 24px 24px;
+    min-height: 90vh;
+    padding-bottom: 5.5rem;
+}
+
+/* Bandeau sombre carbone scellé sous la navbar (élimine la coupure blanche) */
+.product-header-bar {
+    width: 100%;
+    margin-top: -5.5rem;
+    padding-top: 7rem;
+    padding-bottom: 2.75rem;
+    background-color: #17181C;
+    background-image:
+            repeating-linear-gradient(60deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 4px),
+            repeating-linear-gradient(-60deg, rgba(0, 0, 0, 0.45) 0px, rgba(0, 0, 0, 0.45) 2px, transparent 2px, transparent 5px),
+            linear-gradient(135deg, #141518 0%, #24272E 50%, #17181C 100%);
+    border-bottom: 4px solid var(--lemark-red);
+    margin-bottom: 3rem;
+    box-shadow: inset 0 -10px 20px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 991px) {
+    .product-header-bar {
+        margin-top: -2rem;
+        padding-top: 3.5rem;
+        padding-bottom: 2rem;
+    }
+}
+
+.product-breadcrumb-link {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--lemark-yellow);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 0.6rem;
+    transition: color 0.2s ease;
+}
+
+.product-breadcrumb-link:hover {
+    color: #FFFFFF;
+}
+
+.product-header-title {
+    font-family: 'Trebuchet MS', 'Arial Black', sans-serif;
+    font-size: clamp(2.1rem, 4.5vw, 3.2rem);
+    font-weight: 900;
+    color: #FFFFFF;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin: 0;
+}
+
+/* Barre d'outils d'image (évite tout chevauchement sur mobile) */
+.product-image-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+}
+
+.badge-model-tag {
+    background-color: #18191B;
+    color: #FFFFFF;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 800;
+    font-size: 0.82rem;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    border: 1px solid #333740;
+}
+
+.btn-zoom-trigger {
+    background-color: #FFFFFF;
+    color: #18191B;
+    border: 1.5px solid #18191B;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 800;
+    font-size: 0.78rem;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 0.4rem 0.85rem;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.btn-zoom-trigger:hover {
+    background-color: var(--lemark-red);
+    border-color: var(--lemark-red);
+    color: #FFFFFF;
+}
+
+/* Cadre photo mécanique */
+.product-main-display {
+    position: relative;
+    background: linear-gradient(180deg, #F8F9FA 0%, #EAEDF2 100%);
+    border: 2px solid #B8BDC6;
+    border-radius: 10px;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+}
+
+.product-main-display img {
+    max-width: 100%;
+    max-height: 360px;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.25));
+    transition: transform 0.2s ease;
+}
+
+.product-main-display:hover img {
+    transform: scale(1.02);
+}
+
+/* Miniatures de carrousel */
+.product-thumbnail-strip {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+.product-thumbnail-item {
+    width: 90px;
+    height: 70px;
+    flex-shrink: 0;
+    background-color: #FFFFFF;
+    border: 2px solid #C0C5CE;
+    border-radius: 6px;
+    padding: 3px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s ease;
+}
+
+.product-thumbnail-item.active {
+    border-color: var(--lemark-red);
+    border-width: 2.5px;
+}
+
+.product-thumbnail-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* ===================================================
+   SÉLECTEUR DE DIMENSIONS : CALIBRE UNIFORME STRICT
+   =================================================== */
+
+.dimension-selector-label {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.85rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #495057;
+    margin-bottom: 0.6rem;
+}
+
+/* Grille CSS : impose des colonnes strictement identiques */
+.dimension-selector-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+    gap: 12px;
+    width: 100%;
+}
+
+/* Pastille individuelle : gabarit et hauteur verrouillés */
+.btn-dimension-choice {
+    width: 100%;
+    min-height: 84px;
+    height: 100%;
+    background-color: #FFFFFF;
+    border: 2px solid #BDC3CC;
+    border-radius: 8px;
+    padding: 0.75rem 0.6rem;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    box-sizing: border-box;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+/* Survol mécanique */
+.btn-dimension-choice:hover {
+    transform: translateY(-3px);
+    border-color: var(--lemark-red);
+    box-shadow: 0 6px 14px rgba(217, 29, 29, 0.16);
+}
+
+.btn-dimension-choice .dimension-spec {
+    font-family: 'Trebuchet MS', 'Arial Black', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: #18191B;
+    line-height: 1.1;
+    letter-spacing: 0.3px;
+    transition: color 0.2s ease;
+}
+
+.btn-dimension-choice:hover .dimension-spec {
+    color: var(--lemark-red);
+}
+
+.btn-dimension-choice .dimension-model-name {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #6C757D;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: color 0.2s ease;
+}
+
+/* État actif / sélectionné */
+.btn-dimension-choice.active {
+    background-color: #18191B;
+    border-color: var(--lemark-red);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(217, 29, 29, 0.25);
+}
+
+.btn-dimension-choice.active .dimension-spec {
+    color: #FFFFFF;
+}
+
+.btn-dimension-choice.active .dimension-model-name {
+    color: var(--lemark-yellow);
+}
+
+.btn-dimension-choice.active:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(217, 29, 29, 0.35);
+}
+
+/* ===================================================
+   DESCRIPTION & OPTIONS
+   =================================================== */
+
+/* Bloc description longue tronquée */
+.product-desc-box {
+    background-color: #FFFFFF;
+    border: 2px solid #CED4DA;
+    border-radius: 8px;
+    padding: 1.25rem;
+}
+
+.product-desc-text {
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: #2D3138;
+    margin: 0;
+}
+
+.btn-link-expand {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 800;
+    font-size: 0.84rem;
+    letter-spacing: 0.6px;
+    color: var(--lemark-red);
+    cursor: pointer;
+    margin-top: 0.75rem;
+    display: inline-block;
+    text-transform: uppercase;
+}
+
+.btn-link-expand:hover {
+    color: var(--lemark-red-dark);
+    text-decoration: underline;
+}
+
+/* Tiroir d'options d'atelier */
+.btn-options-toggle {
+    width: 100%;
+    background-color: #FFFFFF;
+    border: 2px solid #BDC3CC;
+    border-radius: 8px;
+    padding: 0.9rem 1.2rem;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 1rem;
+    font-weight: 900;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: #18191B;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.btn-options-toggle:hover {
+    border-color: #18191B;
+}
+
+/* Cartes d'options : Highlight noir franc & élévation au survol */
+.option-card-industrial {
+    background-color: #FFFFFF;
+    border: 2px solid #BDC3CC;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.option-card-industrial:hover {
+    border-color: #18191B;
+    box-shadow: 0 6px 18px rgba(24, 25, 27, 0.18);
+    transform: translateY(-2px);
+}
+
+.option-img-box {
+    height: 145px;
+    background: #EDEFF2;
+    border-bottom: 2px solid #D5D9E0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+    cursor: pointer;
+}
+
+.option-img-box img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.2s ease;
+}
+
+.option-card-industrial:hover .option-img-box img {
+    transform: scale(1.04);
+}
+
+/* Bouton d'agrandissement conforme */
+.option-img-box .btn-zoom-trigger {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: #FFFFFF;
+    color: #18191B;
+    border: 1.5px solid #18191B;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    padding: 0.3rem 0.65rem;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    z-index: 2;
+    transition: all 0.2s ease;
+}
+
+.option-card-industrial:hover .btn-zoom-trigger {
+    background-color: var(--lemark-red);
+    border-color: var(--lemark-red);
+    color: #FFFFFF;
+}
+
+.option-body {
+    padding: 0.9rem;
+    flex-grow: 1;
+}
+
+.option-title {
+    font-size: 0.95rem;
+    font-weight: 900;
+    color: #18191B;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+.option-desc {
+    font-size: 0.85rem;
+    color: #555B66;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* ===================================================
+   APPEL À L'ACTION & LIGHTBOX
+   =================================================== */
+
+/* Bloc d'appel : prise de rendez-vous & atelier */
+.cta-phone-card {
+    background: #18191B;
+    border-left: 6px solid var(--lemark-red);
+    border-radius: 8px;
+    padding: 1.4rem;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+}
+
+.cta-phone-title {
+    font-family: 'Trebuchet MS', 'Arial Black', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #FFFFFF;
+    margin-bottom: 0.35rem;
+}
+
+.cta-phone-text {
+    font-size: 0.9rem;
+    color: #B8BDC6;
+    line-height: 1.45;
+    margin-bottom: 1rem;
+}
+
+.btn-phone-massive {
+    background: linear-gradient(90deg, #D91D1D 0%, #BF1414 100%);
+    color: #FFFFFF;
+    font-family: 'Trebuchet MS', 'Arial Black', sans-serif;
+    font-weight: 900;
+    font-size: 1.25rem;
+    letter-spacing: 0.8px;
+    padding: 0.85rem 1.25rem;
+    border-radius: 6px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.btn-phone-massive:hover {
+    background: linear-gradient(90deg, #E62222 0%, #D01818 100%);
+    color: #FFFFFF;
+    transform: translateY(-1px);
+}
+
+/* Visionneuse plein écran */
+.lightbox-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(18, 19, 23, 0.92);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.lightbox-container {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    border: 2px solid #18191B;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lightbox-img {
+    max-width: 100%;
+    max-height: 75vh;
+    object-fit: contain;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: -14px;
+    right: -14px;
+    background-color: var(--lemark-red);
+    color: #FFFFFF;
+    border: 2px solid #FFFFFF;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 900;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    padding: 0.35rem 0.85rem;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+
+
+
+
+
+
+
+
+/* ===================================================
+   ACCÈS ADMINISTRATEUR (TERMINAL D'ATELIER)
+   =================================================== */
+
+.admin-terminal-wrapper {
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #17181C;
+    background-image:
+            repeating-linear-gradient(60deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 4px),
+            repeating-linear-gradient(-60deg, rgba(0, 0, 0, 0.45) 0px, rgba(0, 0, 0, 0.45) 2px, transparent 2px, transparent 5px),
+            linear-gradient(135deg, #141518 0%, #24272E 50%, #17181C 100%);
+    padding: 2rem;
+    margin-top: -5.5rem; /* Pour se glisser sous la navbar comme le catalogue */
+    padding-top: 7.5rem;
+}
+
+.admin-login-card {
+    background-color: #F8F9FA;
+    border: 3px solid #18191B;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 460px;
+    padding: 2.5rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.admin-login-header {
+    border-bottom: 3px solid var(--lemark-red);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+
+.admin-login-title {
+    font-family: 'Trebuchet MS', 'Arial Black', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #18191B;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.admin-input-heavy {
+    width: 100%;
+    background-color: #FFFFFF;
+    border: 2px solid #BDC3CC;
+    border-radius: 6px;
+    padding: 0.85rem 1rem;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #18191B;
+    transition: all 0.2s ease;
+}
+
+.admin-input-heavy:focus {
+    border-color: #18191B;
+    box-shadow: 4px 4px 0px rgba(24, 25, 27, 0.1);
+    outline: none;
+}
+
+.btn-admin-login {
+    width: 100%;
+    background-color: #18191B;
+    color: #FFFFFF;
+    font-family: 'Trebuchet MS', 'Arial Black', sans-serif;
+    font-weight: 900;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 1rem;
+    border: 2px solid #18191B;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-admin-login:hover {
+    background-color: var(--lemark-red);
+    border-color: var(--lemark-red);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(217, 29, 29, 0.3);
+}
+
+.admin-dashboard-wrapper {
+    min-height: 85vh;
+    background-color: #F0F2F5;
+    padding: 3rem 0;
+}
+
+
+
+/* ===================================================
+   TABLEAU DE BORD ADMINISTRATEUR (CENTRE DE COMMANDE)
+   =================================================== */
+
+.admin-dashboard-layout {
+    display: flex;
+    min-height: 100vh;
+    background-color: #E9ECEF;
+    margin-top: -5.5rem; /* Remonte sous la navbar */
+    padding-top: 5.5rem; /* Compense la navbar */
+}
+
+/* Panneau de navigation (Sidebar) */
+.admin-sidebar {
+    width: 260px;
+    background-color: #17181C;
+    border-right: 4px solid var(--lemark-red);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.admin-sidebar-header {
+    padding: 1.5rem;
+    background-color: #101114;
+    border-bottom: 2px solid #2B2D33;
+}
+
+.admin-sidebar-title {
+    font-family: 'Consolas', 'Courier New', monospace;
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.admin-nav-btn {
+    background: none;
+    border: none;
+    color: #A8ADB7;
+    text-align: left;
+    padding: 1.1rem 1.5rem;
+    font-family: 'Trebuchet MS', 'Arial Black', sans-serif;
+    font-weight: 900;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    width: 100%;
+    border-bottom: 1px solid #24262B;
+    transition: all 0.2s ease;
+}
+
+.admin-nav-btn:hover {
+    background-color: #24272D;
+    color: #FFFFFF;
+}
+
+.admin-nav-btn.active {
+    background-color: var(--lemark-red);
+    color: #FFFFFF;
+    border-bottom-color: var(--lemark-red);
+}
+
+.admin-logout-zone {
+    margin-top: auto;
+    padding: 1.5rem;
+    border-top: 2px solid #2B2D33;
+}
+
+.btn-admin-logout {
+    width: 100%;
+    background: none;
+    border: 2px solid #555B66;
+    color: #A8ADB7;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 800;
+    padding: 0.6rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+}
+
+.btn-admin-logout:hover {
+    border-color: #FFFFFF;
+    color: #FFFFFF;
+}
+
+/* Zone de travail (Contenu) */
+.admin-content-area {
+    flex-grow: 1;
+    padding: 2.5rem 3rem;
+    overflow-y: auto;
+}
+
+.admin-content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid #CED4DA;
+}
+
+.admin-content-title {
+    font-family: 'Trebuchet MS', 'Arial Black', sans-serif;
+    font-size: 2rem;
+    font-weight: 900;
+    color: #18191B;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.btn-admin-add {
+    background-color: var(--lemark-yellow);
+    color: #18191B;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 900;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    padding: 0.6rem 1.25rem;
+    border: 2px solid #18191B;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 4px 0 rgba(24, 25, 27, 1);
+    transition: all 0.1s ease;
+}
+
+.btn-admin-add:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 rgba(24, 25, 27, 1);
+}
+
+/* Tableaux de données industriels */
+.admin-table-wrapper {
+    background-color: #FFFFFF;
+    border: 2px solid #BDC3CC;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table th {
+    background-color: #18191B;
+    color: #FFFFFF;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 1rem;
+    text-align: left;
+}
+
+.admin-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #E2E6EA;
+    vertical-align: middle;
+    color: #2D3138;
+    font-weight: 600;
+}
+
+.admin-table tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-table tr:hover td {
+    background-color: #F8F9FA;
+}
+
+/* Boutons d'action mécaniques (Éditer/Supprimer) */
+.admin-action-group {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-action-sm {
+    background: none;
+    border: 2px solid #BDC3CC;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 800;
+    font-size: 0.75rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-action-edit {
+    color: #18191B;
+}
+
+.btn-action-edit:hover {
+    border-color: #18191B;
+    background-color: #18191B;
+    color: #FFFFFF;
+}
+
+.btn-action-delete {
+    color: var(--lemark-red);
+}
+
+.btn-action-delete:hover {
+    border-color: var(--lemark-red);
+    background-color: var(--lemark-red);
+    color: #FFFFFF;
+}
+
+
+
+
+
+
+
+/* ===================================================
+   FORMULAIRES D'ADMINISTRATION (STYLE ATELIER)
+   =================================================== */
+
+.admin-form-container {
+    background-color: #FFFFFF;
+    border: 2px solid #BDC3CC;
+    border-radius: 8px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.admin-form-group {
+    margin-bottom: 1.5rem;
+}
+
+.admin-form-label {
+    display: block;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.9rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #495057;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.5px;
+}
+
+.admin-input, .admin-select, .admin-textarea {
+    width: 100%;
+    background-color: #F8F9FA;
+    border: 2px solid #CED4DA;
+    border-radius: 6px;
+    padding: 0.85rem 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #18191B;
+    transition: all 0.2s ease;
+}
+
+.admin-input:focus, .admin-select:focus, .admin-textarea:focus {
+    border-color: #18191B;
+    background-color: #FFFFFF;
+    box-shadow: 4px 4px 0px rgba(24, 25, 27, 0.1);
+    outline: none;
+}
+
+.admin-textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Interrupteur Nouveauté (Toggle industriel) */
+.admin-checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #F8F9FA;
+    border: 2px solid #CED4DA;
+    padding: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.admin-checkbox-wrapper:hover {
+    border-color: #18191B;
+}
+
+.admin-checkbox {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    accent-color: var(--lemark-red);
+}
+
+/* Barre d'actions du formulaire */
+.admin-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 3px solid #E2E6EA;
+}
+
+.btn-admin-cancel {
+    background-color: transparent;
+    color: #495057;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 800;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    padding: 0.85rem 1.5rem;
+    border: 2px solid #BDC3CC;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-admin-cancel:hover {
+    background-color: #E2E6EA;
+    color: #18191B;
+    border-color: #18191B;
+}
+
+.btn-admin-save {
+    background-color: var(--lemark-red);
+    color: #FFFFFF;
+    font-family: 'Trebuchet MS', 'Arial Black', sans-serif;
+    font-weight: 900;
+    font-size: 1.05rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.85rem 2rem;
+    border: 2px solid var(--lemark-red);
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 4px 0px rgba(180, 20, 20, 1);
+    transition: all 0.1s ease;
+}
+
+.btn-admin-save:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 rgba(180, 20, 20, 1);
+}
+
+/* ==========================================
+   SYSTÈME DE TOASTS NOTIFICATIONS
+   ========================================== */
+.admin-toast-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+}
+
+.admin-toast {
+    min-width: 320px;
+    padding: 16px 24px;
+    border-radius: 6px;
+    color: #fff;
+    font-family: 'Trebuchet MS', 'Arial Black', sans-serif;
+    font-size: 0.95rem;
+    font-weight: bold;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    animation: slideInToast 0.3s ease-out forwards;
+    pointer-events: auto;
+}
+
+.admin-toast.success {
+    background-color: #198754;
+    border-left: 6px solid #146c43;
+}
+
+.admin-toast.error {
+    background-color: #dc3545;
+    border-left: 6px solid #b02a37;
+}
+
+.admin-toast-close {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.admin-toast-close:hover {
+    opacity: 1;
+}
+
+@keyframes slideInToast {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* Style additionnel pour les champs en erreur */
+.input-duplicate-error {
+    border: 2px solid #dc3545 !important;
+    background-color: #fff8f8 !important;
+}

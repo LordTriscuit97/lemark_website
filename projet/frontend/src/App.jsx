@@ -24,8 +24,8 @@ function App() {
 
                 <footer className="bg-lemark-dark text-center py-4 mt-auto">
                     <div className="container">
-                        <p className="mb-0 fw-bold">© {new Date().getFullYear()} Les Entreprises Lemark. Équipements robustes pour VTT.</p>
-                        <p className="small text-secondary mt-2 mb-0">Besoin d'aide ? Appelez-nous au 1-800-555-0199</p>
+                        <p className="mb-0 fw-bold">© {new Date().getFullYear()} Les Entreprises Lemark.</p>
+                        <p className="small text-secondary mt-2 mb-0">Besoin d'aide ? Appelez-nous au (819) 388-4921</p>
                     </div>
                 </footer>
             </div>
