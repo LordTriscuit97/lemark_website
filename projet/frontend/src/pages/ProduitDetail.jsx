@@ -19,7 +19,7 @@ function ProduitDetail() {
     const LIMITE_CARACTERES = 175;
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/all_produits')
+        fetch('/api/all_produits')
             .then(res => {
                 if (!res.ok) throw new Error('Erreur réseau');
                 return res.json();

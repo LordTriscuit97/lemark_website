@@ -8,7 +8,7 @@ function Catalogue() {
     const [erreur, setErreur] = useState(null);
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/all_produits')
+        fetch('/api/all_produits')
             .then(res => {
                 if (!res.ok) throw new Error('Erreur réseau');
                 return res.json();

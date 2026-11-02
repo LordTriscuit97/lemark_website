@@ -101,11 +101,11 @@ function Admin() {
     // ==========================================
     // CHARGEMENT DES DONNÉES
     // ==========================================
-    const chargerProduits = () => fetch('http://localhost:8080/api/all_produits').then(res => res.json()).then(data => setProduits(Array.isArray(data) ? data.sort((a, b) => a.idProduit - b.idProduit) : [])).catch(console.error);
-    const chargerOptions = () => fetch('http://localhost:8080/api/admin/options', { headers: { 'Authorization': `Bearer ${jeton}` } }).then(res => res.json()).then(setOptionsGlobales).catch(console.error);
-    const chargerCategories = () => fetch('http://localhost:8080/api/admin/categories', { headers: { 'Authorization': `Bearer ${jeton}` } }).then(res => res.json()).then(setCategories).catch(console.error);
-    const chargerParametres = () => fetch('http://localhost:8080/api/admin/parametres', { headers: { 'Authorization': `Bearer ${jeton}` } }).then(res => res.json()).then(data => { if(data) setParametres(data); }).catch(console.error);
-    const chargerComptes = () => fetch('http://localhost:8080/api/admin/comptes', { headers: { 'Authorization': `Bearer ${jeton}` } }).then(res => res.json()).then(data => setComptes(data)).catch(console.error);
+    const chargerProduits = () => fetch('/api/all_produits').then(res => res.json()).then(data => setProduits(Array.isArray(data) ? data.sort((a, b) => a.idProduit - b.idProduit) : [])).catch(console.error);
+    const chargerOptions = () => fetch('/api/admin/options', { headers: { 'Authorization': `Bearer ${jeton}` } }).then(res => res.json()).then(setOptionsGlobales).catch(console.error);
+    const chargerCategories = () => fetch('/api/admin/categories', { headers: { 'Authorization': `Bearer ${jeton}` } }).then(res => res.json()).then(setCategories).catch(console.error);
+    const chargerParametres = () => fetch('/api/admin/parametres', { headers: { 'Authorization': `Bearer ${jeton}` } }).then(res => res.json()).then(data => { if(data) setParametres(data); }).catch(console.error);
+    const chargerComptes = () => fetch('/api/admin/comptes', { headers: { 'Authorization': `Bearer ${jeton}` } }).then(res => res.json()).then(data => setComptes(data)).catch(console.error);
 
     useEffect(() => {
         if (jeton) { chargerProduits(); chargerOptions(); chargerCategories(); chargerParametres(); chargerComptes(); }
@@ -118,7 +118,7 @@ function Admin() {
         e.preventDefault();
         setChargement(true);
         try {
-            const response = await fetch('http://localhost:8080/api/auth/login', {
+            const response = await fetch('/api/auth/login', {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ courriel, motDePasse }),
             });
@@ -149,7 +149,7 @@ function Admin() {
         e.preventDefault();
         const estModif = idOriginalCompte !== null;
         try {
-            const res = await fetch(estModif ? `http://localhost:8080/api/admin/comptes/${idOriginalCompte}` : `http://localhost:8080/api/admin/comptes`, {
+            const res = await fetch(estModif ? `/api/admin/comptes/${idOriginalCompte}` : `/api/admin/comptes`, {
                 method: estModif ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jeton}` }, body: JSON.stringify(formDataCompte),
             });
             if (!res.ok) throw new Error("Erreur de sauvegarde.");
@@ -163,7 +163,7 @@ function Admin() {
         if (email === courrielActif) return afficherToast("Interdit : Tu ne peux pas supprimer ton propre compte.", "error");
         if (!window.confirm(`⚠️ Retirer l'accès pour "${email}" ?`)) return;
         try {
-            await fetch(`http://localhost:8080/api/admin/comptes/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${jeton}` } });
+            await fetch(`/api/admin/comptes/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${jeton}` } });
             chargerComptes(); afficherToast("Accès révoqué", "success");
         } catch (err) { afficherToast(err.message, "error"); }
     };
@@ -185,7 +185,7 @@ function Admin() {
         const estModif = idOriginal !== null;
         try {
             const payload = { ...formData, idProduit: estModif ? parseInt(formData.idProduit) : null };
-            const response = await fetch(estModif ? `http://localhost:8080/api/admin/produits/${idOriginal}` : `http://localhost:8080/api/admin/produits`, { method: estModif ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jeton}` }, body: JSON.stringify(payload) });
+            const response = await fetch(estModif ? `/api/admin/produits/${idOriginal}` : `/api/admin/produits`, { method: estModif ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jeton}` }, body: JSON.stringify(payload) });
             if (!response.ok) throw new Error("Erreur de sauvegarde de l'équipement.");
             chargerProduits();
             setVueEquipement('liste');
@@ -195,13 +195,13 @@ function Admin() {
     const handleSupprimerProduit = async (id, nom) => {
         if (!window.confirm(`⚠️ Supprimer l'équipement "${nom}" ?`)) return;
         try {
-            await fetch(`http://localhost:8080/api/admin/produits/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${jeton}` } });
+            await fetch(`/api/admin/produits/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${jeton}` } });
             chargerProduits(); afficherToast("Équipement supprimé", "success");
         } catch (err) { afficherToast("Erreur lors de la suppression.", "error"); }
     };
     const toggleCompatibilite = async (idOption, lier) => {
         try {
-            await fetch(`http://localhost:8080/api/admin/options/produit/${idOriginal}/${lier ? 'lier' : 'retirer'}/${idOption}`, { method: lier ? 'POST' : 'DELETE', headers: { 'Authorization': `Bearer ${jeton}` }});
+            await fetch(`/api/admin/options/produit/${idOriginal}/${lier ? 'lier' : 'retirer'}/${idOption}`, { method: lier ? 'POST' : 'DELETE', headers: { 'Authorization': `Bearer ${jeton}` }});
             chargerProduits(); afficherToast(lier ? "Option liée" : "Option retirée", "success");
         } catch (err) { afficherToast("Erreur lors de la modification.", "error"); }
     };
@@ -213,7 +213,7 @@ function Admin() {
         const estModif = idOriginalModele !== null;
         try {
             const payload = { ...formDataModele, idModele: estModif ? parseInt(formDataModele.idModele) : null, idProduit: idOriginal };
-            const res = await fetch(estModif ? `http://localhost:8080/api/admin/modeles/${idOriginalModele}` : `http://localhost:8080/api/admin/modeles`, { method: estModif ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jeton}` }, body: JSON.stringify(payload) });
+            const res = await fetch(estModif ? `/api/admin/modeles/${idOriginalModele}` : `/api/admin/modeles`, { method: estModif ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jeton}` }, body: JSON.stringify(payload) });
             if (!res.ok) throw new Error("Erreur de sauvegarde.");
             chargerProduits(); annulerModele(); afficherToast(estModif ? "Modèle mis à jour" : "Modèle ajouté", "success");
         } catch (err) { afficherToast(err.message, "error"); }
@@ -221,7 +221,7 @@ function Admin() {
     const handleSupprimerModele = async (idModele, nom) => {
         if (!window.confirm(`⚠️ Retirer le modèle "${nom}" ?`)) return;
         try {
-            await fetch(`http://localhost:8080/api/admin/modeles/${idModele}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${jeton}` } });
+            await fetch(`/api/admin/modeles/${idModele}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${jeton}` } });
             chargerProduits(); afficherToast("Modèle retiré", "success");
         } catch(err) { afficherToast("Erreur de suppression.", "error"); }
     };
@@ -242,7 +242,7 @@ function Admin() {
         if (fichierImage) data.append('fichier', fichierImage);
 
         try {
-            const res = await fetch(estModif ? `http://localhost:8080/api/admin/images/${idOriginalImage}` : `http://localhost:8080/api/admin/images`, { method: estModif ? 'PUT' : 'POST', headers: { 'Authorization': `Bearer ${jeton}` }, body: data });
+            const res = await fetch(estModif ? `/api/admin/images/${idOriginalImage}` : `/api/admin/images`, { method: estModif ? 'PUT' : 'POST', headers: { 'Authorization': `Bearer ${jeton}` }, body: data });
             if (!res.ok) throw new Error("Erreur d'enregistrement de l'image.");
             chargerProduits(); annulerImage();
             afficherToast(estModif ? "Image mise à jour" : "Image ajoutée", "success");
@@ -251,7 +251,7 @@ function Admin() {
     const handleSupprimerImage = async (idImage, nomFichier) => {
         if (!window.confirm(`⚠️ Retirer l'image "${nomFichier}" ?`)) return;
         try {
-            await fetch(`http://localhost:8080/api/admin/images/${idImage}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${jeton}` } });
+            await fetch(`/api/admin/images/${idImage}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${jeton}` } });
             chargerProduits(); afficherToast("Image retirée", "success");
         } catch (err) { afficherToast("Erreur de suppression.", "error"); }
     };
@@ -263,7 +263,7 @@ function Admin() {
         const estModif = idOriginalOption !== null;
         try {
             const payload = { ...formDataOption, idOption: estModif ? parseInt(formDataOption.idOption) : null };
-            const res = await fetch(estModif ? `http://localhost:8080/api/admin/options/${idOriginalOption}` : `http://localhost:8080/api/admin/options`, { method: estModif ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jeton}` }, body: JSON.stringify(payload) });
+            const res = await fetch(estModif ? `/api/admin/options/${idOriginalOption}` : `/api/admin/options`, { method: estModif ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jeton}` }, body: JSON.stringify(payload) });
             if (!res.ok) throw new Error("Erreur de sauvegarde.");
             chargerOptions(); setVueOption('liste'); afficherToast(estModif ? "Option mise à jour" : "Option créée", "success");
         } catch (err) { afficherToast(err.message, "error"); }
@@ -271,7 +271,7 @@ function Admin() {
     const handleSupprimerOption = async (id, nom) => {
         if (!window.confirm(`⚠️ Retirer définitivement l'option "${nom}" ?`)) return;
         try {
-            await fetch(`http://localhost:8080/api/admin/options/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${jeton}` } });
+            await fetch(`/api/admin/options/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${jeton}` } });
             chargerOptions(); chargerProduits(); afficherToast("Option supprimée", "success");
         } catch (err) { afficherToast("Erreur de suppression.", "error"); }
     };
@@ -283,7 +283,7 @@ function Admin() {
         const estModif = idOriginalCategorie !== null;
         try {
             const payload = { ...formDataCategorie, idCategorie: estModif ? parseInt(formDataCategorie.idCategorie) : null };
-            const res = await fetch(estModif ? `http://localhost:8080/api/admin/categories/${idOriginalCategorie}` : `http://localhost:8080/api/admin/categories`, { method: estModif ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jeton}` }, body: JSON.stringify(payload) });
+            const res = await fetch(estModif ? `/api/admin/categories/${idOriginalCategorie}` : `/api/admin/categories`, { method: estModif ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jeton}` }, body: JSON.stringify(payload) });
             if (!res.ok) throw new Error("Erreur de sauvegarde.");
             chargerCategories(); chargerProduits(); setVueCategorie('liste'); afficherToast(estModif ? "Catégorie mise à jour" : "Catégorie créée", "success");
         } catch (err) { afficherToast(err.message, "error"); }
@@ -291,7 +291,7 @@ function Admin() {
     const handleSupprimerCategorie = async (id, nom) => {
         if (!window.confirm(`⚠️ Retirer la catégorie "${nom}" ?`)) return;
         try {
-            const res = await fetch(`http://localhost:8080/api/admin/categories/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${jeton}` } });
+            const res = await fetch(`/api/admin/categories/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${jeton}` } });
             if (!res.ok) throw new Error(`Des équipements utilisent encore la catégorie "${nom}".`);
             chargerCategories(); afficherToast("Catégorie supprimée", "success");
         } catch (err) { afficherToast(err.message, "error"); }
@@ -300,7 +300,7 @@ function Admin() {
     const handleSauvegarderParametres = async (e) => {
         e.preventDefault();
         try {
-            await fetch('http://localhost:8080/api/admin/parametres', { method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jeton}` }, body: JSON.stringify(parametres) });
+            await fetch('/api/admin/parametres', { method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${jeton}` }, body: JSON.stringify(parametres) });
             afficherToast('Paramètres enregistrés !', 'success');
         } catch (err) { afficherToast("Erreur de sauvegarde", "error"); }
     };
